@@ -12,23 +12,23 @@ const bcryptSalt = 10
 router.get("/signup", (req, res) => res.render("auth/signup"))
 router.post("/signup", (req, res, next) => {
 
-    const { username, password } = req.body
+    const { username, password,email } = req.body
 
-    if (!username || !password) {
+    if (!username || !password || !email) {
         res.render("auth/signup", { errorMsg: "Rellena el usuario y la contraseña" })
         return
     }
 
-    User.findOne({ username })
+    User.findOne({$or:[{ username},{email}]})
         .then(user => {
             if (user) {
-                res.render("auth/signup", { errorMsg: "El usuario ya existe en la BBDD" })
+                res.render("auth/signup", { errorMsg: "El usuario o el email ya existen en la BBDD" })
                 return
             }
             const salt = bcrypt.genSaltSync(bcryptSalt)
             const hashPass = bcrypt.hashSync(password, salt)
 
-            User.create({ username, password: hashPass })
+            User.create({ username, password: hashPass, email })
                 .then(() => res.redirect("/"))
                 .catch(() => res.render("auth/signup", { errorMsg: "No se pudo crear el usuario" }))
         })
