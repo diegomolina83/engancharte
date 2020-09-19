@@ -19,4 +19,8 @@ h1, h2, h3 {
   height: 50px;
   object-fit: cover; }
 
+.userEditImage {
+  height: 100px;
+  object-fit: cover; }
+
 /*# sourceMappingURL=style.css.map */

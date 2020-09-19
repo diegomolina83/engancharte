@@ -17,7 +17,9 @@
       <th scope="row">1</th>
       <td>{{username}}</td>
       <td><img class="userListImage" src="{{imageUrl}}" alt=""></td>
-      <td>@mdo</td>
+      <td><a class="btn btn-outline-danger" href="/users/delete/{{_id}}">Eliminar</a>
+      <a class="btn btn-outline-primary" href="/users/edit/{{_id}}">Editar</a></td>
+
     </tr>
     {{/each}}
      </tbody>
