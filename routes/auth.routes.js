@@ -7,7 +7,7 @@ const cdnUploader = require('../configs/cloudinary.config')
 const User = require("../models/user.model")
 const Picture = require("../models/picture.model")
 
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcryptjs")
 const bcryptSalt = 10
 
 
