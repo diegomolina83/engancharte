@@ -1,7 +1,7 @@
-{{#each all}}
-<h1>title: {{title}}</h1><br>
+{{#each works}}
+<h2>title: {{title}}  || author: {{author}}</h2><br>
+<p>temática: {{tematica}}</p>
 
-<h2>temática: {{tematica}}</h2>
-
-<a href="/works/details"> Ver detalles de obra</a>
+<img style="height: 70px;" src="{{imageUrl}}" alt="User image profile"><br><br>
+<a href="/works/details/{{id}}"> Ver detalles de obra</a>
 {{/each}}
