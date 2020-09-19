@@ -1,13 +1,15 @@
 const express = require('express')
 //const User = require('../models/user.model')
 const router = express.Router()
+const Picture = require('../models/picture.model')
 const Works = require('../models/works.model')
 const Picture = require('../models/picture.model')
 
 const cdnUploader = require('../configs/cloudinary.config')
+const User = require('../models/user.model')
 
 router.get('/works', (req, res, next) => {
-    Works.find().then(all => res.render('works/indexWorks', {all}))
+    Works.find({}).then(works => { res.render('works/indexWorks', {works})})
 })
 
 router.get('/works/create', (req, res, next) => res.render("works/createWorks"))
@@ -41,7 +43,10 @@ router.post('/works/create', cdnUploader.single('imageInput'),(req, res, next) =
         .then(res.redirect('/'))
 })
 
-router.get('/works/details', (req, res, next) => { res.render('works/detailsWorks')})
+router.get('/works/details/:id', (req, res, next) => {
+    const id = req.params.id
 
+     Works.findById(id).then(work => res.render('works/detailsWorks', {work}))
+})
 
 module.exports = router

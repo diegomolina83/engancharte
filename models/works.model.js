@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
-const User = require("./user.model")
 const Schema = mongoose.Schema
+//onst User = require('../models/user.model')
+const User = mongoose.model('User')
 
 const workSchema = new Schema({
     title: {
@@ -9,7 +10,6 @@ const workSchema = new Schema({
     },
     imageUrl: {
         type: String,
-       // required: true
     },
     description: {
         type: String
@@ -17,14 +17,16 @@ const workSchema = new Schema({
     tematica: {
         type: String
     },
-    author: {
-        type: String
-    },
     price: {
         type: Number,
         required: true
-    }  
-})
+    },
+    author: String,
+
+}, {
+    timestamps: true
+}
+)
 
 const Works = mongoose.model('Works', workSchema)
 
