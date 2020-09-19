@@ -4,4 +4,6 @@ module.exports = app => {
   app.use('/', require('./index.routes'))
   app.use('/', require('./auth.routes'))
   app.use('/',require('./users.routes'))
+  app.use('/',require('./works.routes'))
+
 }
