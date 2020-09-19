@@ -1,8 +1,10 @@
 const express = require("express")
 const router = express.Router()
 const passport = require("passport")
+const cdnUploader = require('../configs/cloudinary.config')
 
 const User = require("../models/user.model")
+const Picture = require("../models/picture.model")
 
 const bcrypt = require("bcrypt")
 const bcryptSalt = 10
@@ -10,14 +12,22 @@ const bcryptSalt = 10
 
 // User signup
 router.get("/signup", (req, res) => res.render("auth/signup"))
-router.post("/signup", (req, res, next) => {
+router.post("/signup",cdnUploader.single('imageInput'), (req, res, next) => {
 
-    const { username, password,email } = req.body
+    const { username, password,email,nameInput } = req.body
 
     if (!username || !password || !email) {
         res.render("auth/signup", { errorMsg: "Rellena el usuario y la contraseña" })
         return
     }
+
+    console.log(req.file)
+    Picture.create({
+        name:nameInput,
+        path:req.file.path,
+        originalName: req.file.originalname
+
+    })
 
     User.findOne({$or:[{ username},{email}]})
         .then(user => {
