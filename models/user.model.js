@@ -6,6 +6,11 @@ const userSchema = new Schema({
     password: String,
     imageUrl: String,
     email:String,
+    role:{
+        type:String,
+        enum:['ADMIN','USER','ARTIST'],
+        default:'USER'
+      }
 }, {
     timestamps: true
 })

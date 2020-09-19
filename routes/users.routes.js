@@ -4,12 +4,14 @@ const router = express.Router()
 const cdnUploader = require('../configs/cloudinary.config')
 const Picture = require('../models/picture.model')
 
+const checkLoggedIn = (req, res, next) => req.isAuthenticated() ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, incia sesión para continuar' })
+const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && rolesToCheck.includes(req.user.role) ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, no tienes permisos para ver eso.' })
 
 
 
 //Listado de usuarios
 
-router.get('/users', (req, res) => {
+router.get('/users',checkRole(['ADMIN']), (req, res) => {
 
 User.find()
 .then(users=>res.render('users/users-list',{users}))
@@ -74,6 +76,10 @@ router.get('/users/profile/:id',(req,res)=>{
 
     
 })
+
+//admin controls
+
+router.get('/users/admin-control',checkRole(['ADMIN']),(req,res)=>res.render('users/admin-control'))
 
 
 module.exports = router

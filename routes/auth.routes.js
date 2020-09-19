@@ -15,8 +15,7 @@ const bcryptSalt = 10
 router.get("/signup", (req, res) => res.render("auth/signup"))
 router.post("/signup",cdnUploader.single('imageInput'), (req, res, next) => {
 
-    const { username, password,email } = req.body
-
+    const { username, password,email,role } = req.body
     if (!username || !password) {
         res.render("auth/signup", { errorMsg: "Rellena el usuario y la contraseña" })
         return
@@ -55,27 +54,37 @@ router.post("/signup",cdnUploader.single('imageInput'), (req, res, next) => {
             const salt = bcrypt.genSaltSync(bcryptSalt)
             const hashPass = bcrypt.hashSync(password, salt)
            
-            User.create({ username, password: hashPass, email,imageUrl })
+            User.create({ username, password: hashPass, email,imageUrl, role })
                 .then(() => res.redirect("/"))
                 .catch(() => res.render("auth/signup", { errorMsg: "No se pudo crear el usuario" }))
         })
         .catch(error => next(error))
 })
+//---------------------------------------------------------------------------------------------------
+const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && rolesToCheck.includes(req.user.role) ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, no tienes permisos para ver eso.' })
 
+
+//--------------------------------------------------------------------------------------------------
 
 // User login
 router.get('/login', (req, res) => res.render('auth/login', { "errorMsg": req.flash("error") }))
 router.post('/login', passport.authenticate("local", {
-    successRedirect: "/",
+    
     failureRedirect: "/login",
     failureFlash: true,
     passReqToCallback: true,
     badRequestMessage: 'Rellena todos los campos'
-}))
+}),(req,res)=>{ //Con esto redirigimos el flujo de Admin hacia el panel de control y añadimos elementos a la nav bar propios del ADMIN
+    if(req.user.role=='ADMIN'){ 
+        req.app.locals.admin="Panel de Control"
+        res.redirect('/users/admin-control')}
+    else res.redirect('/')
+})
 
 
 // User logout
 router.get("/logout", (req, res) => {
+    req.app.locals.admin=""
     req.logout()
     res.redirect("/login")
 })
