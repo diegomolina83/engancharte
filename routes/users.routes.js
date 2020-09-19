@@ -63,4 +63,17 @@ router.post('/users/edit/:id',cdnUploader.single('imageInput'),(req,res)=>{
 })
 
 
+//Perfil de usuario
+
+router.get('/users/profile/:id',(req,res)=>{
+
+    const id = req.params.id
+    User.findById(id)
+    .then(user=>res.render('users/users-profile',user))
+    .catch(err=>console.log('Error: ', err))
+
+    
+})
+
+
 module.exports = router
