@@ -5,7 +5,7 @@ const router = express.Router()
 router.get('/users', (req, res) => {
 
 User.find()
-.then(users=>res.render('users/profile',{users}))
+.then(users=>res.render('users/users-list',{users}))
 .catch(err=>console.log('Error: ', err))
 
 })
