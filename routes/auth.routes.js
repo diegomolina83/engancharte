@@ -14,16 +14,15 @@ const bcryptSalt = 10
 router.get("/signup", (req, res) => res.render("auth/signup"))
 router.post("/signup",cdnUploader.single('imageInput'), (req, res, next) => {
 
-    const { username, password,email,nameInput } = req.body
+    const { username, password,email } = req.body
 
     if (!username || !password || !email) {
         res.render("auth/signup", { errorMsg: "Rellena el usuario y la contraseña" })
         return
     }
-
-    console.log(req.file)
+    
     Picture.create({
-        name:nameInput,
+        name:req.file.originalname,
         path:req.file.path,
         originalName: req.file.originalname
 
@@ -37,8 +36,8 @@ router.post("/signup",cdnUploader.single('imageInput'), (req, res, next) => {
             }
             const salt = bcrypt.genSaltSync(bcryptSalt)
             const hashPass = bcrypt.hashSync(password, salt)
-
-            User.create({ username, password: hashPass, email })
+            const imageUrl= req.file.path
+            User.create({ username, password: hashPass, email,imageUrl })
                 .then(() => res.redirect("/"))
                 .catch(() => res.render("auth/signup", { errorMsg: "No se pudo crear el usuario" }))
         })
