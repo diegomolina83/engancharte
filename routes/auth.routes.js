@@ -1,3 +1,4 @@
+let imageUrl
 const express = require("express")
 const router = express.Router()
 const passport = require("passport")
@@ -16,17 +17,34 @@ router.post("/signup",cdnUploader.single('imageInput'), (req, res, next) => {
 
     const { username, password,email } = req.body
 
-    if (!username || !password || !email) {
+    if (!username || !password) {
         res.render("auth/signup", { errorMsg: "Rellena el usuario y la contraseña" })
         return
     }
-    
-    Picture.create({
-        name:req.file.originalname,
-        path:req.file.path,
-        originalName: req.file.originalname
 
-    })
+    if (!email) {
+        res.render("auth/signup", { errorMsg: "El campo email no puede estar vacío" })
+        return
+    }
+
+    
+    if (req.file) {
+
+        if(req.file.size>2000000){
+            res.render("auth/signup", { errorMsg: "El tamaño de la imagen no puede ser superior a 2 MB" })
+            return
+        } 
+
+        Picture.create({
+            name:req.file.originalname,
+            path:req.file.path,
+            originalName: req.file.originalname
+            })
+            imageUrl= req.file.path
+      }else{
+          imageUrl='../images/defecto.png'
+      }
+   
 
     User.findOne({$or:[{ username},{email}]})
         .then(user => {
@@ -36,7 +54,7 @@ router.post("/signup",cdnUploader.single('imageInput'), (req, res, next) => {
             }
             const salt = bcrypt.genSaltSync(bcryptSalt)
             const hashPass = bcrypt.hashSync(password, salt)
-            const imageUrl= req.file.path
+           
             User.create({ username, password: hashPass, email,imageUrl })
                 .then(() => res.redirect("/"))
                 .catch(() => res.render("auth/signup", { errorMsg: "No se pudo crear el usuario" }))
