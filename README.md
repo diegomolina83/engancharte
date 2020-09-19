@@ -1,12 +1,23 @@
-# Express generator + auth
+# App de compra/venta de obras de arte
 
-Boilerplate for a basic ExpressJS backend (incl. all auth routes and views - [PassportJS](http://www.passportjs.org/) login & sessions)
+## Routes
 
-## Install
-
-- Run `npm i` on the root directory
-
-## Run
-
-- Create a `.env` file on the root directory to populate the database (`DB`) and port (`PORT`)
-- Run `npm run dev` command on the root directory
+ Method |Path | Descripction 
+--- | --- | ---
+GET| / | Índice
+GET| /tags/:id |  Busqueda de cuadro según el tag
+GET| /login | Registro 
+POST| /login | Registro
+GET | /signup | Iniciar sesión 
+POST| /signup | Iniciar sesión 
+GET | /logout | Cerrar sesión
+GET | /user | Perfil usuario
+POST | /user/edit | Editar perfil de usuario
+GET | /user/delete/:id | Borrar perfil de usuario
+GET | /user/works | Ver obras de usuario  
+POST | /user/works/edit | Editar una obra de usuario 
+GET | /user/works/delete/:id | Eliminar una obra de usuario
+GET | /shop | Ir al carrito 
+POST | /shop | Comprar obra
+GET | /shop/delete | Eliminar obra del carrito
+GET | /show-gallerys | Mostrar en el mapa galerias cercanas
