@@ -76,15 +76,19 @@ router.post('/login', passport.authenticate("local", {
     badRequestMessage: 'Rellena todos los campos'
 }),(req,res)=>{ //Con esto redirigimos el flujo de Admin hacia el panel de control y añadimos elementos a la nav bar propios del ADMIN
     if(req.user.role=='ADMIN'){ 
+        req.app.locals.cerrar='Cerrar sesión'
         req.app.locals.admin="Panel de Control"
         res.redirect('/users/admin-control')}
-    else res.redirect('/')
+    else { 
+        req.app.locals.cerrar='Cerrar sesión'
+        res.redirect('/')}
 })
 
 
 // User logout
 router.get("/logout", (req, res) => {
     req.app.locals.admin=""
+    req.app.locals.cerrar=''
     req.logout()
     res.redirect("/login")
 })
