@@ -1,7 +1,6 @@
 const express = require('express')
 //const User = require('../models/user.model')
 const router = express.Router()
-const Picture = require('../models/picture.model')
 const Works = require('../models/works.model')
 const Picture = require('../models/picture.model')
 const cdnUploader = require('../configs/cloudinary.config')
