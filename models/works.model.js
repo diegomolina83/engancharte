@@ -1,7 +1,5 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
-//onst User = require('../models/user.model')
-const User = mongoose.model('User')
 
 const workSchema = new Schema({
     title: {
@@ -22,7 +20,7 @@ const workSchema = new Schema({
         required: true
     },
     author: String,
-
+    idUser: String
 }, {
     timestamps: true
 }

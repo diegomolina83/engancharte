@@ -1,5 +1,7 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
+const Works = require(`../models/works.model`)
+
 
 const userSchema = new Schema({
     username: String,

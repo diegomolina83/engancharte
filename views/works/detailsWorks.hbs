@@ -1,12 +1,18 @@
-<h1>DETALLES DE OBRA</h1>
+<h2>DETALLES DE OBRA</h2>
 
-{{imageUrl}}
 
-<div class="container">
-    <h2> {{work.title}} </h2><br><br>
-    <img style="width: 500px; margin:20px" src="{{work.imageUrl}}" alt="obra"></img>
-    <article> Description: {{work.description}}</article>
-    <p> Author: {{work.author}}</p>
-    <p> Tematica: {{work.tematica}}</p>
-</div>
+
+
+<form  action="/movies/{{id}}/new" method="POST">
+    <label>Title: </label>
+    <input type='text' name="title" value="{{work.title}}">
+    <label>Genre: </label>
+    <input type='text' name="autor" value="{{work.author}}">
+    <label> Plot: </label>
+    <textarea class="col-9 form-control" type='text' name="description" >{{work.description}}</textarea>
+    <button class="btn btn-warning" type='submit' class='btn btn-info'>Edit</button>
+</form>
+
+<a class="btn btn-primary" href="/movies" role="button">Go back</a>
+
 
