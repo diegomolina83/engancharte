@@ -1,5 +1,7 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
+const Works = require(`../models/works.model`)
+
 
 const userSchema = new Schema({
     username: String,
@@ -10,7 +12,8 @@ const userSchema = new Schema({
         type:String,
         enum:['ADMIN','USER','ARTIST'],
         default:'USER'
-      }
+      },
+    works: { type: Schema.Types.ObjectId, ref: 'Works'}  
 }, {
     timestamps: true
 })
