@@ -1,4 +1,22 @@
-<h1>Perfil de {{username}} </h1>
+<h1>Perfil de {{user.username}} </h1>
 
-<img src="{{imageUrl}}" alt="User image profile">
+<img src="{{user.imageUrl}}" alt="User image profile">
+
+{{!-- <h2>Perfiles Seguidos</h2>
+
+{{#each users}}
+<p>
+<img class="userEditImage" src="{{imageUrl}}" alt="foto perfil">
+{{username}}
+</p>
+{{/each}} --}}
+
+
+<a class="follow btn btn-outline-success" href="/users/follow/{{user._id}}">Seguir</a>
+
+
+
+
+{{!-- LISTA DE FOLLOWS --}}
+
 

@@ -1,3 +1,15 @@
+
+
+<h1>Perfil de {{user.username}} </h1>
+
+<img class="userEditImage" src="{{user.imageUrl}}" alt="User image profile">
+
+
+
+
+
+{{!-- LISTA DE FOLLOWS --}}
+
 <div class="container">
 
 
@@ -18,10 +30,7 @@
       <th scope="row"><a href="/users/profile/{{_id}}">+</a></th>
       <td>{{username}}</td>
       <td><img class="userListImage" src="{{imageUrl}}" alt=""></td>
-      <td><a class="btn btn-outline-danger" href="/users/delete/{{_id}}">Eliminar</a>
-      <a class="btn btn-outline-primary" href="/users/edit/{{_id}}">Editar</a>
-      <a class="follow btn btn-outline-success" href="/users/follow/{{_id}}">Seguir</a>
-      <a class="{{../msgObj.msg}} btn btn-outline-warning" href="/users/unfollow/{{_id}}">Dejar de seguir </a></td>
+      <td><a class="{{../msgObj.msg}} btn btn-outline-warning" href="/users/unfollow/{{_id}}">Dejar de seguir </a></td>
       
      
       

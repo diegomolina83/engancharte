@@ -10,7 +10,10 @@ const userSchema = new Schema({
         type:String,
         enum:['ADMIN','USER','ARTIST'],
         default:'USER'
-      }
+      },
+    followedUsers:{
+        type:[String]
+    }
 }, {
     timestamps: true
 })

@@ -23,4 +23,7 @@ h1, h2, h3 {
   height: 100px;
   object-fit: cover; }
 
+.oculto {
+  display: none; }
+
 /*# sourceMappingURL=style.css.map */
