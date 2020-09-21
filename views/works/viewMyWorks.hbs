@@ -1,8 +1,19 @@
 <h1>AQUI SE VERIAN LAS OBRAS DEL ARTISTA LOGGEADO</h1><br><br>
+
 {{#each worksUser}}
-<p>Author: {{author}}</p>
-<li>title: {{title}}</li>
-<img style="width: 200px;" src="{{imageUrl}}" alt="{{description}}">
-<li>description: {{description}}</li><br><br>
-<a href="/works/{{id}}/delete"> delete works</a>
+<form action="/works/{{id}}/edit" method="POST">
+    <label>Title: </label>
+    <input type='text' name="title" value="{{author}}">
+
+    <label>Author: </label>
+    <input type='text' name="author" value="{{title}}">
+
+    <label> Description: </label>
+    <textarea class="col-9 form-control" type='text' name="description" >{{description}}</textarea>
+
+
+    <button class="btn btn-warning" type='submit' class='btn btn-info'>Edit</button>
 {{/each}}
+</form>
+
+<a class="btn btn-primary" href="/movies" role="button">Go back</a>
