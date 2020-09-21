@@ -33,8 +33,18 @@ h1, h2, h3 {
 
 }
 
+.indexImage{
+  width: 90%;
+  height: 300px;
+  object-fit: cover;
+}
+
 
 
 .oculto{
   display:none;
+}
+
+.lista{
+  display: flex;
 }
