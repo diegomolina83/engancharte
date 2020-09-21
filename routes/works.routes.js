@@ -23,8 +23,10 @@ router.get('/create', checkRole(['ADMIN', 'ARTIST']),(req, res, next) => {
     res.render("works/createWorks")})
 
 router.post('/create', cdnUploader.single('imageInput'),(req, res, next) => { 
-    const {title, description, tematica,author, price} = req.body
+    const {title, description, tags,author, price} = req.body
     const idUser = req.user.id
+    const tematica= tags.split(',')
+    console.log(tematica)
 
     if (!title || !description || !price) {
         res.render("works/createWorks", { errorMsg: "Rellena los campos titulo, descripcion y precio" })
@@ -48,7 +50,7 @@ router.post('/create', cdnUploader.single('imageInput'),(req, res, next) => {
           imageUrl='../images/defecto.png'
       }
 
-    Works.create({title, description, tematica, imageUrl, author, price, user:req.user})
+    Works.create({title, description, tags:tematica, imageUrl, author, price, user:req.user})
     .then(res.redirect('/'))
 })
 
@@ -68,7 +70,20 @@ router.get('/details/:id', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, ne
 // Muestra las obras del artista loggeado
 router.get('/my-works', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, next) => {
 
-    Works.find({idUser: req.user.id}).then(worksUser => res.render('works/viewMyWorks', {worksUser}))
+let myWorks=[]
+    
+    Works.find()
+    .populate('user')
+    .then(worksUser =>{
+        worksUser.forEach(element => {
+
+        if(element.user.id == req.user.id){
+            myWorks.push(element)
+        }
+    })
+    res.render('works/viewMyWorks', {myWorks})
+    })
+        
     .catch(err => console.log(err))
 })
 
@@ -77,7 +92,7 @@ router.get('/my-works', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, next)
 router.get('/:id/delete', (req, res) => {
 
     const id = req.params.id
-    Works.findByIdAndDelete(id).then(deleteWork => res.redirect('/works'))
+    Works.findByIdAndDelete(id).then(deleteWork => res.redirect('back'))
         .catch(err => console.log(err))
 })
 

@@ -1,3 +1,5 @@
+@import "node_modules/@glidejs/glide/src/assets/sass/glide.core";
+
 body {
   font-weight: 200;
 }
@@ -36,15 +38,25 @@ h1, h2, h3 {
 .indexImage{
   width: 90%;
   height: 300px;
-  object-fit: cover;
+  object-fit: contain;
 }
 
-
+.glideImage{
+  height: 300px;
+  width: 100%;
+  object-fit: contain;
+}
 
 .oculto{
   display:none;
+  
 }
 
 .lista{
   display: flex;
 }
+
+.glide{
+  margin-top:25px;
+}
+

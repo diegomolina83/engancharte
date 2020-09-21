@@ -1,22 +1,68 @@
+
+
 <h1>Perfil de {{user.username}} </h1>
 
-<img src="{{user.imageUrl}}" alt="User image profile">
-
-{{!-- <h2>Perfiles Seguidos</h2>
-
-{{#each users}}
-<p>
-<img class="userEditImage" src="{{imageUrl}}" alt="foto perfil">
-{{username}}
-</p>
-{{/each}} --}}
+<img class="userEditImage"src="{{user.imageUrl}}" alt="User image profile">
 
 
-<a class="follow btn btn-outline-success" href="/users/follow/{{user._id}}">Seguir</a>
+
+<a class="{{follow}} follow btn btn-outline-success" href="/users/follow/{{user._id}}">Seguir</a>
+<a class="{{unfollow}} btn btn-outline-warning" href="/users/unfollow/{{user._id}}">Dejar de seguir </a>
 
 
 
 
-{{!-- LISTA DE FOLLOWS --}}
+{{!-- LISTA DE Obras --}}
 
 
+<div class="glide">
+  <div data-glide-el="controls">
+  <button data-glide-dir="<"><-</button>
+  <button data-glide-dir=">">-></button>
+</div>
+  <div class="glide__track" data-glide-el="track">
+
+    
+    <ul class="glide__slides">
+    
+     {{#each works}}
+     
+      <li class="glide__slide">
+         <a href="/works/details/{{_id}}"><img class="glideImage" src="{{imageUrl}}" alt="imagen"></a>
+          <h2>{{title}}</h2>
+          </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.4.1/glide.min.js"
+    integrity="sha512-BXASbMmKLu+RC5TDnkupyhvrjiOQXILh/5zgIS8k5JAC71a73lNweVEg/X+9XJQ7GK22PH9WpztY3zqrji+xrQ=="
+    crossorigin="anonymous"></script>
+
+    {{!-- <script>
+    new Glide('.glide', {
+        startAt: 0,
+        perView: 2
+    }).mount()
+</script> --}}
+
+<script>
+var glide = new Glide('.glide', {
+  type: 'carousel',
+  perView: 3,
+  focusAt: 'center',
+  breakpoints: {
+    800: {
+      perView: 2
+    },
+    480: {
+      perView: 1
+    }
+  }
+})
+
+glide.mount()
+</script>
