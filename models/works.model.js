@@ -22,7 +22,7 @@ const workSchema = new Schema({
         required: true
     },
     author: String,
-
+    idUser:String,
 }, {
     timestamps: true
 }

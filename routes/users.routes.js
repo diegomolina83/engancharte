@@ -153,11 +153,8 @@ let unfollow= req.user.followedUsers
     if(unfollow.includes(req.params.id)){
                
 let index= unfollow.indexOf(req.params.id)
-console.log("index---------",index)
-console.log("unfollow before",unfollow.length)
-
 unfollow.splice(index,1)
-console.log("unfollow after",unfollow.length)
+
     User.findByIdAndUpdate(req.user.id,{followedUsers:unfollow})
     .then(()=>res.redirect('back'))
     .catch(err=>console.log('Error: ', err))
