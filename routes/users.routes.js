@@ -93,7 +93,7 @@ Promise.all([userPromise,usersPromise])
 
 //Perfil de usuarios
 
-router.get('/users/profile/:id',(req,res)=>{
+router.get('/users/profile/:id',checkLoggedIn,(req,res)=>{
     
 
 
