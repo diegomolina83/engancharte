@@ -1,0 +1,18 @@
+<h1>Editar obra</h1>
+
+<h2>DETALLES DE OBRA</h2>
+
+
+
+
+<form  action="/works/{{_id}}/edit" method="POST">
+    <label>Title: </label>
+    <input type='text' name="title" value="{{title}}">
+    <label>Author: </label>
+    <input type='text' name="author" value="{{author}}">
+    <label> Plot: </label>
+    <input type='text' name="description" value="{{description}}"></input>
+    <button class="btn btn-warning" type='submit' class='btn btn-info'>Edit</button>
+</form>
+
+<a class="btn btn-primary" href="/works" role="button">Go back</a>

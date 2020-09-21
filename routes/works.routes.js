@@ -56,7 +56,7 @@ router.post('/create', cdnUploader.single('imageInput'),(req, res, next) => {
 router.get('/details/:id', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, next) => {
 
     const id = req.params.id
-    Works.findByIdAndUpdate(id).then(work => res.render('works/detailsWorks', {work})) // Cambiar
+    Works.findByIdAndUpdate(id).then(work => res.render('works/detailsWorks', work))
 })
 
 // Muestra las obras del artista loggeado
@@ -66,6 +66,8 @@ router.get('/my-works', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, next)
     .catch(err => console.log(err))
 })
 
+
+// Borrar obra
 router.get('/:id/delete', (req, res) => {
 
     const id = req.params.id
@@ -73,15 +75,26 @@ router.get('/:id/delete', (req, res) => {
         .catch(err => console.log(err))
 })
 
-router.post('/:id/edit', (req, res) => {
-    const id = req.params.id
-    const {author, title, description} = req.body   //! title es un array con todos los titulos de las obras
-    //console.log(author, title, description)
+
+// editar obra
+router.get('/:id/edit', (req, res) => {
     
-    author.forEach(author => {
-        console.log(author)
-        Works.findByIdAndUpdate(id, {author}).then(res => console.log(res))
-    });
+    const id = req.params.id
+    console.log(id)
+
+    Works.findByIdAndUpdate(id).then(work => res.render('works/editWorks', work)).catch(err => console.log(err))
+})
+
+router.post('/:id/edit', (req, res) => {
+
+    const id = req.params.id
+    const {title, author, description} = req.body
+
+    Works.findByIdAndUpdate(id, {title, author, description})
+        .then(() =>  res.redirect('/'))
+        .catch(err => console.log(err))
+
+
 })
 
 module.exports = router
