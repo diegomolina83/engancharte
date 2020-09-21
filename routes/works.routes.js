@@ -14,7 +14,7 @@ router.get('/', checkRole(['ADMIN', 'ARTIST', 'USER']), (req, res, next) => {
         Works.find({}).then(works => { res.render('works/indexWorks', {works})})    
 })
 
-// Crea una obra en la bdd
+// Crea una obra en la bcdd
 router.get('/create', checkRole(['ADMIN', 'ARTIST']),(req, res, next) => { 
     if (req.user.role === 'USER') {
         res.render("/works", {errorMsg: "Debes ser artista"})
@@ -59,9 +59,11 @@ router.get('/details/:id', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, ne
     Works.findByIdAndUpdate(id).then(work => res.render('works/detailsWorks', work))
 })
 
+
 // Muestra las obras del artista loggeado
 router.get('/my-works', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, next) => {
 
+    Works.find().populate('user').then(res => console.log(res))
     Works.find({idUser: req.user.id}).then(worksUser => res.render('works/viewMyWorks', {worksUser}))
     .catch(err => console.log(err))
 })
@@ -76,7 +78,7 @@ router.get('/:id/delete', (req, res) => {
 })
 
 
-// editar obra
+// Editar obra
 router.get('/:id/edit', (req, res) => {
     
     const id = req.params.id
