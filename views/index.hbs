@@ -2,5 +2,20 @@
 <p>Welcome to {{title}}</p>
 <a href="/works/create"> Go to create works</a>
 <a href="/works/">Go to view works</a>
-<a href="works/my-works/{{id}}">Go to view MY Works</a>
-{{worksUser}}
+<a href="/works/my-works/{{id}}">Go to view MY Works</a>
+
+<div class="container">
+<div class="row">
+{{#each works}}
+ <div class="col-sm-4">
+<a href="/works/details/{{_id}}"><img class="indexImage" src="{{imageUrl}}" alt="imagen"></a>
+<h3>{{title}}</h3>
+<p>{{descriprion}}</p>
+<p> Artista:  <a href="/users/profile/{{user._id}}">{{user.username}}</p></a>
+<p>{{price}}€</p>
+</div>
+{{/each}}
+</div>
+</div>
+
+

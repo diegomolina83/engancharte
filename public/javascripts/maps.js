@@ -2,10 +2,12 @@ function moveMapToBerlin(map){
     map.setCenter({lat:52.5159, lng:13.3777});
     map.setZoom(14);
   }
-  
+
   /**
    * Boilerplate map initialization code starts below:
    */
+
+
   
   //Step 1: initialize communication with the platform
   // In your own code, replace variable window.apikey with your own apikey

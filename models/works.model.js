@@ -20,7 +20,7 @@ const workSchema = new Schema({
         required: true
     },
     author: String,
-    idUser: String
+    user: { type: Schema.Types.ObjectId, ref: 'User' }
 }, {
     timestamps: true
 }

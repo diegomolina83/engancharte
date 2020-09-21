@@ -28,7 +28,15 @@ h1, h2, h3 {
   height: 100px;
   object-fit: cover; }
 
+.indexImage {
+  width: 90%;
+  height: 300px;
+  object-fit: cover; }
+
 .oculto {
   display: none; }
+
+.lista {
+  display: flex; }
 
 /*# sourceMappingURL=style.css.map */
