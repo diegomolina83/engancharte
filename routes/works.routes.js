@@ -72,8 +72,8 @@ router.get('/my-works', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, next)
     .catch(err => console.log(err))
 })
 
-//Eliminar obras
 
+// Borrar obra
 router.get('/:id/delete', (req, res) => {
 
     const id = req.params.id
@@ -82,17 +82,25 @@ router.get('/:id/delete', (req, res) => {
 })
 
 
+// editar obra
+router.get('/:id/edit', (req, res) => {
+    
+    const id = req.params.id
+    console.log(id)
+
+    Works.findByIdAndUpdate(id).then(work => res.render('works/editWorks', work)).catch(err => console.log(err))
+})
 
 router.post('/:id/edit', (req, res) => {
+
     const id = req.params.id
-    const {author, title, description} = req.body   //! title es un array con todos los titulos de las obras
-    console.log(author, title, description)
-    
-   /* author.forEach(author => {
-        Works.findByIdAndUpdate(id, {author, title, description})
-        .then(() => res.redirect('/'))
+    const {title, author, description} = req.body
+
+    Works.findByIdAndUpdate(id, {title, author, description})
+        .then(() =>  res.redirect('/'))
         .catch(err => console.log(err))
-    });*/
+
+
 })
 
 module.exports = router
