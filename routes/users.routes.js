@@ -1,5 +1,3 @@
-console.log("princpio")
-
 let newFollow=[]
 const express = require('express')
 const User = require('../models/user.model')

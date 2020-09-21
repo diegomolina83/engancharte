@@ -23,9 +23,8 @@ router.get('/create', checkRole(['ADMIN', 'ARTIST']),(req, res, next) => {
     res.render("works/createWorks")})
 
 router.post('/create', cdnUploader.single('imageInput'),(req, res, next) => { 
-    const {title, description, tematica, author, price} = req.body
+    const {title, description, tematica, price} = req.body
     const idUser = req.user.id
-    console.log(idUser)
 
     if (!title || !description || !price) {
         res.render("works/createWorks", { errorMsg: "Rellena los campos titulo, descripcion y precio" })
@@ -76,12 +75,14 @@ router.get('/:id/delete', (req, res) => {
 
 router.post('/:id/edit', (req, res) => {
     const id = req.params.id
-    const {author, title, description} = req.body
-    Works.findByIdAndUpdate(id, {author, title, description})
+    const {author, title, description} = req.body   //! title es un array con todos los titulos de las obras
+    console.log(author, title, description)
+    
+   /* author.forEach(author => {
+        Works.findByIdAndUpdate(id, {author, title, description})
         .then(() => res.redirect('/'))
         .catch(err => console.log(err))
+    });*/
 })
-
-
 
 module.exports = router
