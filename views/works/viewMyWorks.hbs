@@ -3,10 +3,10 @@
 {{#each worksUser}}
 <form action="/works/{{id}}/edit" method="POST">
     <label>Title: </label>
-    <input type='text' name="title" value="{{author}}">
+    <input type='text' name="title" value="{{title}}">
 
     <label>Author: </label>
-    <input type='text' name="author" value="{{title}}">
+    <input type='text' name="author" value="{{author}}">
 
     <label> Description: </label>
     <textarea class="col-9 form-control" type='text' name="description" >{{description}}</textarea>
@@ -17,3 +17,4 @@
 </form>
 
 <a class="btn btn-primary" href="/movies" role="button">Go back</a>
+{{worksUser}}

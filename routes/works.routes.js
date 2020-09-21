@@ -56,7 +56,7 @@ router.post('/create', cdnUploader.single('imageInput'),(req, res, next) => {
 router.get('/details/:id', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, next) => {
 
     const id = req.params.id
-    Works.findByIdAndUpdate(id).then(work => res.render('works/detailsWorks', {work}))
+    Works.findByIdAndUpdate(id).then(work => res.render('works/detailsWorks', {work})) // Cambiar
 })
 
 // Muestra las obras del artista loggeado
@@ -76,13 +76,12 @@ router.get('/:id/delete', (req, res) => {
 router.post('/:id/edit', (req, res) => {
     const id = req.params.id
     const {author, title, description} = req.body   //! title es un array con todos los titulos de las obras
-    console.log(author, title, description)
+    //console.log(author, title, description)
     
-   /* author.forEach(author => {
-        Works.findByIdAndUpdate(id, {author, title, description})
-        .then(() => res.redirect('/'))
-        .catch(err => console.log(err))
-    });*/
+    author.forEach(author => {
+        console.log(author)
+        Works.findByIdAndUpdate(id, {author}).then(res => console.log(res))
+    });
 })
 
 module.exports = router
