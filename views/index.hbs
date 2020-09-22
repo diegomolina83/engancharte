@@ -32,7 +32,7 @@
 </div>
 
 
-   
+   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     {{!-- <button id="getWorks">Obtener obras de arte</button> --}}
 
@@ -42,8 +42,8 @@
 
        window.onload = () => {
 
-            fetch('http://localhost:3000/works/api')
-                .then(res => res.json())
+            axios.get('http://localhost:3000/works/api')
+                .then(res => res.data)
                 .then(response => {
                     html = ''
                     shuffle(response)
