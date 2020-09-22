@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
     Works.find({})
     .populate('user')
     .then(works=>{
-        console.log(works)
+        
         res.render('index',{works})})
     .catch(err=>console.log('Error: ', err))
 })

@@ -9,16 +9,43 @@ const { route } = require('./index.routes')
 const checkLoggedIn = (req, res, next) => req.isAuthenticated() ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, incia sesión para continuar' })
 const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && rolesToCheck.includes(req.user.role) ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, no tienes permisos para ver eso.' })
 
+
 // Musetra todas las obras de la bbdd
 router.get('/', checkRole(['ADMIN', 'ARTIST', 'USER']), (req, res, next) => {
 
         Works.find({}).then(works => { res.render('works/indexWorks', {works})})    
 })
 
-//Creamos un json con todas las obras de la bbdd
-router.get('/api', checkRole(['ADMIN', 'ARTIST', 'USER']), (req, res, next) => {
 
-    Works.find({}).then(works => { res.json(works)})    
+//Creamos un json con todas las obras de la bbdd
+router.get('/api', (req, res, next) => {
+
+    Works.find({})
+    .populate('user')
+    .then(works => { res.json(works)})    
+})
+
+//JSON con todos los tags
+router.get('/api/tags/',  (req, res, next) => {
+
+    
+
+    Works.find({})
+    .populate('user')
+    .then(works => { res.json(works)})    
+})
+
+//JSON con las obras que contengan el tag name
+router.get('/api/tags/:name',  (req, res, next) => {
+
+    name=req.params.name
+    console.log(name)
+    
+
+
+    Works.find({tags:{ "$regex": name}})
+    .populate('user')
+    .then(works => { res.json(works)})    
 })
 
 // Crea una obra en la bdd
@@ -33,7 +60,6 @@ router.post('/create', cdnUploader.single('imageInput'),(req, res, next) => {
     const {title, description, tags,author, price} = req.body
     const idUser = req.user.id
     const tematica= tags.split(',')
-    console.log(tematica)
 
     if (!title || !description || !price) {
         res.render("works/createWorks", { errorMsg: "Rellena los campos titulo, descripcion y precio" })
@@ -108,7 +134,7 @@ router.get('/:id/delete', (req, res) => {
 router.get('/:id/edit', (req, res) => {
     
     const id = req.params.id
-    console.log(id)
+    
 
     Works.findByIdAndUpdate(id).then(work => res.render('works/editWorks', work)).catch(err => console.log(err))
 })
@@ -118,7 +144,7 @@ router.post('/:id/edit',checkLoggedIn, (req, res) => {
     const id = req.params.id
     const {title, author, description,tags,price} = req.body
 
-    console.log("-----------++++++++",{title, author, description,tags,price})
+   
     Works.findByIdAndUpdate(id, {title, author, description,tags,price})
         .then(() =>  res.redirect('/'))
         .catch(err => console.log(err))

@@ -140,7 +140,7 @@ else {
    
  Promise.all([userPromise,worksPromise])
  .then(results=>{
-     console.log("--------------------",results[0])
+     
      res.render('users/users-profile',{user:results[0],works:results[1]})})    
  .catch(err=>console.log('Error: ', err))
 

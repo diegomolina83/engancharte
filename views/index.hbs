@@ -22,7 +22,8 @@
 <h1>{{title}}</h1>
 <p>Welcome to {{title}}</p>
 
-
+<input type="text" id="worksField" placeholder="¿Qué estás buscando?">
+<button id="getInfo" class="btn btn-dark btn-sm">Consultar</button>
 <div class="container">
     <div class="row" id="works">
        
@@ -31,59 +32,12 @@
     </div>
 </div>
 
-
-   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/javascripts/api-handlers.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     {{!-- <button id="getWorks">Obtener obras de arte</button> --}}
 
     <ul id="works"></ul>
 
-    <script>
-
-       window.onload = () => {
-
-            axios.get('http://localhost:3000/works/api')
-                .then(res => res.data)
-                .then(response => {
-                    html = ''
-                    shuffle(response)
-                    response.forEach(elm =>          
-                        
-                     html += `<div class="col-sm-4">
-            <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
-            <h3>${elm.title}</h3>
-            <p>${elm.description}</p>
-            <p> Artista: <a href="/users/profile/${elm.user}">${elm.author}</p></a>
-            <p>${elm.price}€</p>
-        </div>`)
-                    document.querySelector('#works').innerHTML = html
-                })
-        }
-
-
-
-//Función para randomizar el array con las obras que se mostrarán en el index
-
-function shuffle(array) {
-  var currentIndex = array.length, temporaryValue, randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
-
-
-
-    </script>
+    
 
