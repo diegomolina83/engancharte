@@ -3,7 +3,6 @@ const galleryApp = new WorksApiHandler()
 document.querySelector('#worksField').onkeyup = () => {
 
     const searchName = document.querySelector('#worksField').value
-
     galleryApp
         .getWorks(searchName)
         .then(response => {
