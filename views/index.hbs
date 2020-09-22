@@ -1,43 +1,10 @@
-{{!-- <h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
-
-
-<div class="container">
-    <div class="row">
-        {{#each works}}
-        <div class="col-sm-4">
-            <a href="/works/details/{{_id}}"><img class="indexImage" src="{{imageUrl}}" alt="imagen"></a>
-            <h3>{{title}}</h3>
-            <p>{{descriprion}}</p>
-            <p> Artista: <a href="/users/profile/{{user._id}}">{{user.username}}</p></a>
-            <p>{{price}}€</p>
-        </div>
-        {{/each}}
-    </div>
-</div> --}}
-
-
-
-
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
-
 <input type="text" id="worksField" placeholder="¿Qué estás buscando?">
-<button id="getInfo" class="btn btn-dark btn-sm">Consultar</button>
+
 <div class="container">
     <div class="row" id="works">
-       
-        
-      
     </div>
 </div>
 
-<script src="/javascripts/api-handlers.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-    {{!-- <button id="getWorks">Obtener obras de arte</button> --}}
-
-    <ul id="works"></ul>
-
-    
-
+<script src="/javascripts/api-handlers.js"></script>
+<script src="/javascripts/app.js"></script>

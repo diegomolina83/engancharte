@@ -60,3 +60,24 @@ h1, h2, h3 {
   margin-top:25px;
 }
 
+#worksField{
+    margin: 20px auto;
+    width: 50%;
+    border-radius: 20px;
+    height: 46px;
+    display: block;
+    outline: none; 
+    border: 1px solid lightgray;
+}
+
+#worksField::placeholder {
+  color: gray;
+  font-size: 1em;
+  
+  
+}
+
+input{
+  padding:0 20px
+}
+
