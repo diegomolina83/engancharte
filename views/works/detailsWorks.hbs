@@ -1,6 +1,11 @@
 <h2>DETALLES DE OBRA</h2>
 
-<p>title: {{title}}</p>
-<p>author: {{author}} </p>
-<p>Description: {{description}} </p>
-<a href="/works"> Go to Works</a>
+
+<div class="container">
+    <h2> {{work.title}} </h2><br><br>
+    <img style="width: 500px; margin:20px" src="{{work.imageUrl}}" alt="obra"></img>
+    <article> Description: {{work.description}}</article>
+   <p> Author:  <a href="/users/profile/{{work.user._id}}">{{work.user.username}}</p></a>
+    <p> Tematica: {{work.tematica}}</p>
+</div>
+

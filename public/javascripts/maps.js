@@ -38,7 +38,7 @@ function modify() {
    // evt.preventDefault()
     const location = document.querySelector('#location')
     axios.get('http://localhost:3000/maps').then((res, ) => console.log(res.data))  // Peticion 
-}  
+}
 
 const location2 = document.querySelector('#button')
 location2.addEventListener('click', modify, false)
@@ -54,7 +54,6 @@ function getGeocode(map) {
       }, (result) => {
           // Add a marker for each location found
           result.items.forEach((item) => {
-            console.log(item)
             map.addObject(new H.map.Marker(item.position));
           });
         }, alert);  

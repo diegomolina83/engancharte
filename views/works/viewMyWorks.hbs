@@ -1,11 +1,35 @@
-<h1>AQUI SE VERIAN LAS OBRAS DEL ARTISTA LOGGEADO</h1><br><br>
+<h1>Mis obras</h1><br><br>
 
-{{#each worksUser}}
-<p>Author: {{author}}</p>
-<li>title: {{title}}</li>
+
+{{!-- <p>Author: {{author}}</p>
+
 <img style="width: 200px;" src="{{imageUrl}}" alt="{{description}}">
 <li>description: {{description}}</li>
 <a href="/works/{{id}}/delete"> delete works</a>
 <a href="/works/{{id}}/edit"> edit works</a><br><br>
 {{/each}}
-<a href="/works"> Go back</a>
+<a href="/works"> Go back</a> --}}
+
+
+<div class="container">
+    <div class="row">
+        {{#each myWorks}}
+        <div class="col-sm-4">
+            <a href="/works/details/{{_id}}"><img class="indexImage" src="{{imageUrl}}" alt="imagen"></a>
+            <h3>{{title}}</h3>
+            <p>{{descriprion}}</p>
+            <a class="btn btn-outline-danger" href="/works/{{id}}/delete">Borrar Obra</a>
+            <a class="btn btn-outline-primary" href="/works/{{id}}/edit">Editar Obra</a>
+            <p>{{price}}€</p>
+        </div>
+        {{/each}}
+    </div>
+</div>
+
+
+
+
+
+
+
+

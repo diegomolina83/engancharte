@@ -41,7 +41,7 @@ router.post("/signup",cdnUploader.single('imageInput'), (req, res, next) => {
             })
             imageUrl= req.file.path
       }else{
-          imageUrl='../images/defecto.png'
+          imageUrl='/images/defecto.png'
       }
    
 
@@ -76,19 +76,56 @@ router.post('/login', passport.authenticate("local", {
     badRequestMessage: 'Rellena todos los campos'
 }),(req,res)=>{ //Con esto redirigimos el flujo de Admin hacia el panel de control y añadimos elementos a la nav bar propios del ADMIN
     if(req.user.role=='ADMIN'){ 
-        req.app.locals.cerrar='Cerrar sesión'
-        req.app.locals.admin="Panel de Control"
+        req.app.locals.cerrar=''
+        req.app.locals.admin=""
+        req.app.locals.profile='oculto'
+        req.app.locals.crearObra='oculto'
+        req.app.locals.verMisObras='oculto'
+        req.app.locals.iniciar='oculto'
+        req.app.locals.registro='oculto'
         res.redirect('/users/admin-control')}
-    else { 
-        req.app.locals.cerrar='Cerrar sesión'
-        res.redirect('/')}
+    else if(req.user.role=='USER'){
+        req.app.locals.cerrar=''
+        req.app.locals.admin='oculto'
+        req.app.locals.profile=''
+        req.app.locals.crearObra='oculto'
+        req.app.locals.verMisObras='oculto'
+        req.app.locals.iniciar='oculto'
+        req.app.locals.registro='oculto'
+        res.redirect('/')
+   }else if(req.user.role=='ARTIST')
+   {
+       console.log("soy un artista")
+        req.app.locals.cerrar=''
+        req.app.locals.admin='oculto'
+        req.app.locals.profile=''
+        req.app.locals.crearObra=''
+        req.app.locals.verMisObras=''
+        req.app.locals.iniciar='oculto'
+        req.app.locals.registro='oculto'
+        res.redirect('/')
+   }
+    else{ 
+        req.app.locals.cerrar='oculto'
+        req.app.locals.admin='oculto'
+        req.app.locals.profile='oculto'
+        req.app.locals.crearObra='oculto'
+        req.app.locals.verMisObras='oculto'
+        req.app.locals.iniciar=''
+        req.app.locals.registro=''
+            res.redirect('/')}
 })
 
 
 // User logout
 router.get("/logout", (req, res) => {
-    req.app.locals.admin=""
-    req.app.locals.cerrar=''
+    req.app.locals.cerrar='oculto'
+    req.app.locals.admin='oculto'
+    req.app.locals.profile='oculto'
+    req.app.locals.crearObra='oculto'
+    req.app.locals.verMisObras='oculto'
+    req.app.locals.iniciar=''
+    req.app.locals.registro=''
     req.logout()
     res.redirect("/login")
 })

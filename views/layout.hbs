@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>{{title}}</title>
+  <link rel="stylesheet" href="node_modules/@glidejs/glide/dist/css/glide.core.min.css">
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script type="text/javascript" src='/javascripts/test-credentials.js'></script>    
@@ -31,25 +32,31 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-          <a class="nav-link" href="/shop">Shop</a>
+          <a class="{{shop}} nav-link" href="/shop">Shop</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/login">Iniciar sesión</a>
+          <a class="{{iniciar}} nav-link" href="/login">Iniciar sesión</a>
         </li>
          <li class="nav-item">
-          <a class="nav-link" href="/users/my-profile">Perfil</a>
+          <a class="{{profile}} nav-link" href="/users/my-profile">Perfil</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/signup">Registro</a>
+          <a class="{{registro}} nav-link" href="/signup">Registro</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/logout">{{cerrar}}</a>
+          <a class="{{crearObra}} nav-link" href="/works/create">Subir obra</a>
         </li>
         <li class="nav-item">
-         <a class="nav-link" href="/users/admin-control">{{admin}}</a> 
+          <a class="{{verMisObras}} nav-link" href="/works/my-works/">Mis obras</a>
+        </li>
+        <li class="nav-item">
+         <a class="{{admin}} nav-link" href="/users/admin-control">Panel de control</a> 
+        </li>
+        <li class="nav-item">
+          <a class="{{cerrar}} nav-link" href="/logout">Cerrar sesión</a>
         </li>
         
       </ul>

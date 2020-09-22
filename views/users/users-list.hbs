@@ -8,6 +8,7 @@
       <th scope="col">#</th>
       <th scope="col">Username</th>
       <th scope="col">Image</th>
+      <th scope="col">Rol</th>
       <th scope="col">Handle</th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
       <th scope="row"><a href="/users/profile/{{_id}}">+</a></th>
       <td>{{username}}</td>
       <td><img class="userListImage" src="{{imageUrl}}" alt=""></td>
+      <td>{{role}}</td>
       <td><a class="btn btn-outline-danger" href="/users/delete/{{_id}}">Eliminar</a>
       <a class="btn btn-outline-primary" href="/users/edit/{{_id}}">Editar</a>
       {{!-- <a class="follow btn btn-outline-success" href="/users/follow/{{_id}}">Seguir</a> --}}
