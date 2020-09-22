@@ -64,10 +64,6 @@ router.get('/details/:id', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, ne
 })
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> origin
 // Muestra las obras del artista loggeado
 router.get('/my-works', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, next) => {
 
