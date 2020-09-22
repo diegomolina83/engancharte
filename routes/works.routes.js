@@ -6,12 +6,19 @@ const User = require('../models/user.model')
 const cdnUploader = require('../configs/cloudinary.config')
 const { route } = require('./index.routes')
 
+const checkLoggedIn = (req, res, next) => req.isAuthenticated() ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, incia sesión para continuar' })
 const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && rolesToCheck.includes(req.user.role) ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, no tienes permisos para ver eso.' })
 
 // Musetra todas las obras de la bbdd
 router.get('/', checkRole(['ADMIN', 'ARTIST', 'USER']), (req, res, next) => {
 
         Works.find({}).then(works => { res.render('works/indexWorks', {works})})    
+})
+
+//Creamos un json con todas las obras de la bbdd
+router.get('/api', checkRole(['ADMIN', 'ARTIST', 'USER']), (req, res, next) => {
+
+    Works.find({}).then(works => { res.json(works)})    
 })
 
 // Crea una obra en la bdd
@@ -106,12 +113,13 @@ router.get('/:id/edit', (req, res) => {
     Works.findByIdAndUpdate(id).then(work => res.render('works/editWorks', work)).catch(err => console.log(err))
 })
 
-router.post('/:id/edit', (req, res) => {
+router.post('/:id/edit',checkLoggedIn, (req, res) => {
 
     const id = req.params.id
-    const {title, author, description} = req.body
+    const {title, author, description,tags,price} = req.body
 
-    Works.findByIdAndUpdate(id, {title, author, description})
+    console.log("-----------++++++++",{title, author, description,tags,price})
+    Works.findByIdAndUpdate(id, {title, author, description,tags,price})
         .then(() =>  res.redirect('/'))
         .catch(err => console.log(err))
 

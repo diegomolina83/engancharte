@@ -118,7 +118,7 @@ else {
 //Datos del usuario
     const userPromise=User.findById(id)
 
-    // if()
+    
 //Sus obras
     const worksPromise=[]
     
@@ -126,18 +126,22 @@ else {
     .populate('user')
     .then(worksUser =>{
         worksUser.forEach(element => {
+            
         if(element.user.id == id){
             worksPromise.push(element)
+            
         }
     })
     
     })        
     .catch(err => console.log(err))
 
-console.log(worksPromise)
+
    
  Promise.all([userPromise,worksPromise])
- .then(results=>res.render('users/users-profile',{user:results[0],works:results[1]}))    
+ .then(results=>{
+     console.log("--------------------",results[0])
+     res.render('users/users-profile',{user:results[0],works:results[1]})})    
  .catch(err=>console.log('Error: ', err))
 
     

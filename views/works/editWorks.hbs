@@ -1,18 +1,52 @@
 <h1>Editar obra</h1>
 
-<h2>DETALLES DE OBRA</h2>
 
 
 
+<img class="glideImage"src="{{imageUrl}}" alt="">
 
-<form  action="/works/{{_id}}/edit" method="POST">
-    <label>Title: </label>
-    <input type='text' name="title" value="{{title}}">
-    <label>Author: </label>
-    <input type='text' name="author" value="{{author}}">
-    <label> Plot: </label>
-    <input type='text' name="description" value="{{description}}"></input>
-    <button class="btn btn-warning" type='submit' class='btn btn-info'>Edit</button>
-</form>
 
-<a class="btn btn-primary" href="/works" role="button">Go back</a>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <h1>Modifica tu obra</h1>
+
+        <form action="/works/{{_id}}/edit" method="POST" >
+            <div class="form-group">
+                <label for="field1">Titulo de la obra</label>
+                <input name="title" type="text" class="form-control" id="field1" value="{{title}}">
+            </div>
+            {{!-- <div class="form-group">
+                <label for="field2">Imagen de la obra</label>
+                <input name="imageInput" type="file" class="form-control" id="field2">
+            </div> --}}
+            <div class="form-group">
+                <label for="field3">Descripcion de la obra</label>
+                <input name="description" type="text" class="form-control" id="field3" value="{{description}}">
+            </div>
+              <div class="form-group">
+                <label for="field6">Tags</label>
+                <input name="tags" type="text" class="form-control" id="field6" value="{{tags}}">
+            </div>
+             <div class="form-group">
+                <label for="field4">Autor/a</label>
+                <input name="author" type="text" class="form-control" id="field4" value="{{author}}">
+            </div>
+             <div class="form-group">
+                <label for="field6">Precio de la obra</label>
+                <input name="price" type="number" class="form-control" id="field6" value="{{price}}">
+            </div>
+
+
+            <button type="submit" class="btn btn-dark btn-block btn-lg">Guardar cambios</button>
+
+            {{#if errorMsg}}
+            <div id="errorMsg">{{{errorMsg}}}</div>
+            {{/if}}
+
+        </form>
+
+        <p>¿No tienes cuenta? <a href="/signup">¡Regístrate!</a></p>
+    </div>
+</div>
