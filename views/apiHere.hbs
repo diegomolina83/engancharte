@@ -1,18 +1,20 @@
-<div  style="30px" id="map"></div>
+<html>
+  <head>
+    <title>Geocoding Service</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+  </head>
+  <body>
+    <div id="floating-panel">
+      <input id="address" type="textbox" value="Madrid" />
+      <input id="submit" type="button" value="Geocode" />
+    </div>
+    <div id="map"></div>
+  </body>
+</html>
 
-<form action="/maps" method="POST">
-            <div class="form-group">
-                <input name="location" type="text" class="form-control" id="location">
-            </div>
-            <button type="submit" id="button" class="btn btn-dark btn-block btn-lg">Publica tu obra</button>
-
-            {{#if errorMsg}}
-            <div id="errorMsg">{{{errorMsg}}}</div>
-            {{/if}}
-
-</form>
 
 <script src="/javascripts/maps.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZzm0DI7JwThVwysdtDJkdsFCktalySFc&callback=initMap"></script>
 
 
-<h1>{{location}}</h1>

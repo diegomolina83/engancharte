@@ -1,71 +1,44 @@
-function moveMapToBerlin(map){
-    map.setCenter({lat: 40.4165, lng: -3.70256});
-    map.setZoom(6);
-  }
-
-  /**
-   * Boilerplate map initialization code starts below:
-   */
+let arrLocationsApi = []
 
 
+axios.get('http://localhost:3000/works/api')
+    .then(res =>{ 
+        arrLocationsApi = res.data
+        console.log(arrLocationsApi)
+
+    }).then( res => {
+        console.log('OTRO ARRAY: --->', arrLocationsApi[4].location)
+
+        
+        axios.get(`https://maps.googleapis.com/maps/api/geocode/json?components=route:\
+            Annankatu|administrative_area:${arrLocationsApi[4].location}|country:España&key=AIzaSyDZzm0DI7JwThVwysdtDJkdsFCktalySFc`)
+        .then(res => {console.log(res.data.results[0].geometry.location)
+        })
+})
+
+function initMap() {
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 6,
+      center: { lat: 40.416775, lng: -3.703790 }
+    });
+    const geocoder = new google.maps.Geocoder();
+    document.getElementById("submit").addEventListener("click", () => {
+      geocodeAddress(geocoder, map);
+    });
+  }   // DEBE SER REVERSE GEOCODING
   
-  //Step 1: initialize communication with the platform
-  // In your own code, replace variable window.apikey with your own apikey
-  var platform = new H.service.Platform({
-    apikey: window.apikey
-  });
-  var defaultLayers = platform.createDefaultLayers();
-  
-  //Step 2: initialize a map - this map is centered over Europe
-  var map = new H.Map(document.getElementById('map'),
-    defaultLayers.vector.normal.map,{
-    zoom: 4,
-    pixelRatio: window.devicePixelRatio || 1
-  });
-
-
-
-  // add a resize listener to make sure that the map occupies the whole container
-  window.addEventListener('resize', () => map.getViewPort().resize());
-  
-  //Step 3: make the map interactive
-  // MapEvents enables the event system
-  // Behavior implements default interactions for pan/zoom (also on mobile touch environments)
-  var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
-  
-  
-function modify() {
-   // evt.preventDefault()
-    const location = document.querySelector('#location')
-    axios.get('http://localhost:3000/maps').then((res, ) => console.log(res.data))  // Peticion 
-}
-
-const location2 = document.querySelector('#button')
-location2.addEventListener('click', modify, false)
-
-
-
-
-  const service = platform.getSearchService()
-
-function getGeocode(map) {
-    service.geocode({
-        q: 'Madrid Majadahonda'
-      }, (result) => {
-          // Add a marker for each location found
-          result.items.forEach((item) => {
-            map.addObject(new H.map.Marker(item.position));
-          });
-        }, alert);  
-    }
-
-  
-  // Create the default UI components
-  var ui = H.ui.UI.createDefault(map, defaultLayers);
-  
-  // Now use the map as required...
-  window.onload = function () {
-    moveMapToBerlin(map);
-    getGeocode(map)
-    modify()
+  function geocodeAddress(geocoder, resultsMap) {
+    const address = document.getElementById("address").value;
+    geocoder.geocode({ address: address + ', España' }, (results, status) => {
+      if (status === "OK") {
+          console.log('LOCATION--->', results[0].geometry.location)
+        resultsMap.setCenter(results[0].geometry.location);
+        new google.maps.Marker({
+          map: resultsMap,
+          position: results[0].geometry.location
+        });
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
   }
