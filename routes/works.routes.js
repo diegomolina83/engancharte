@@ -18,35 +18,6 @@ router.get('/', checkRole(['ADMIN', 'ARTIST', 'USER']), (req, res, next) => {
 })
 
 
-//Creamos un json con todas las obras de la bbdd
-router.get('/api', (req, res, next) => {
-    Works.find()
-        .populate('user')
-        .then(works => { res.json(works) })
-        .catch(err => next(err))
-})
-
-
-//JSON con todos los tags
-router.get('/api/tags/', (req, res, next) => {
-    Works.find()
-        .populate('user')
-        .then(works => { res.json(works) })
-        .catch(err => next(err))
-})
-
-
-//JSON con las obras que contengan el tag name
-router.get('/api/tags/:name', (req, res, next) => {
-    name = req.params.name
-    Works.find({ $or: [{ title: { "$regex": name } }, { tags: { "$regex": name } }, { description: { "$regex": name } }] })
-        .populate('user')
-        .then(works => { res.json(works) })
-        .catch(err => next(err))
-})
-
-
-
 // Crea una obra en la bdd (GET)
 router.get('/create', checkRole(['ADMIN', 'ARTIST']), (req, res, next) => {
     if (req.user.role === 'USER') {
@@ -140,6 +111,19 @@ router.post('/:id/edit', checkLoggedIn, (req, res, next) => {
     Works.findByIdAndUpdate(id, { title, author, description, tags, price })
         .then(() => res.redirect('/'))
         .catch(err => next(err))
+})
+
+
+//Likes de obras
+router.get('/like/:id', checkLoggedIn, (req, res, next) => {
+    newLikes = req.user.likes   //El array se llena con los usuarios a los que sigue el user
+    if (!req.user.likes.includes(req.params.id)) {
+        newLikes.push(req.params.id)
+        User.findByIdAndUpdate(req.user.id, { likes: newLikes })
+            .then(() => res.redirect('back'))
+            .catch(err => next(err))
+    }
+    else console.log("YA ESTÁ INCLUIDO")
 })
 
 module.exports = router

@@ -1,4 +1,5 @@
 let newFollow = []
+let newLikes = []
 const express = require('express')
 const User = require('../models/user.model')
 const Works = require('../models/works.model')
@@ -10,6 +11,7 @@ const { get } = require('mongoose')
 const checkLoggedIn = (req, res, next) => req.isAuthenticated() ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, incia sesión para continuar' })
 const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && rolesToCheck.includes(req.user.role) ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, no tienes permisos para ver eso.' })
 
+
 //Listado de usuarios
 router.get('/users', checkRole(['ADMIN']), (req, res, next) => {
     User.find()
@@ -18,7 +20,6 @@ router.get('/users', checkRole(['ADMIN']), (req, res, next) => {
             res.render('users/users-list', { users, msgObj })
         })
         .catch(err => next(err))
-
 })
 
 
@@ -63,10 +64,20 @@ router.get('/users/my-profile/', checkLoggedIn, (req, res, next) => {
             .catch(err => next(err))
 
     })
+    //Obras que le gustan
+    const likes = []
+    req.user.likes.forEach(element => {
+        Works.findById(element)
+            .then(work => {
+                console.log(likes)
+                likes.push(work)
+            })
+            .catch(err => next(err))
+    })
 
     //Revisar si se puede hacer con un populate
-    Promise.all([userPromise, usersPromise])
-        .then(results => res.render('users/my-profile', { user: results[0], users: results[1] }))
+    Promise.all([userPromise, usersPromise, likes])
+        .then(results => res.render('users/my-profile', { user: results[0], users: results[1], likes: results[2] }))
         .catch(err => console.log('Error: ', err))
 })
 
@@ -136,6 +147,8 @@ router.get('/users/unfollow/:id', checkLoggedIn, (req, res, next) => {
     }
     else { console.log("No lo seguías") }
 })
+
+
 
 
 module.exports = router

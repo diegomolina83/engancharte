@@ -17,7 +17,8 @@ const userSchema = new Schema({
         type:[String]
     },
     likes:{
-        type:[String]
+        type: [String],
+        default: []
     }
 }, {
     timestamps: true

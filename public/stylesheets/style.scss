@@ -81,3 +81,38 @@ input{
   padding:0 20px
 }
 
+
+
+//Like button
+
+/* Container needed to position the button. Adjust the width as needed */
+.containerLike {
+  position: relative;
+  width: 90%;
+}
+
+/* Make the image responsive */
+.containerLike img {
+  width: 90%;
+  height: 300px;
+}
+
+/* Style the button and place it in the middle of the container/image */
+.containerLike .btn {
+  position: absolute;
+  width: 5%;
+  top: 80%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: red;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  
+}
+
+.containerLike .btn:hover {
+  background-color: black;
+}
