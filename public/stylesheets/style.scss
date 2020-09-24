@@ -4,6 +4,14 @@ body {
   font-weight: 200;
 }
 
+
+#map {
+    margin-top: 200px;
+    width: 100%;
+    height: 300px;
+    background: grey;
+}
+
 h1, h2, h3 {
   font-weight: 200;
 }
@@ -35,14 +43,12 @@ h1, h2, h3 {
 
 }
 
-.indexImageDetail{
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+#image-work {
+    width: 100%;
 }
 
 .indexImage{
-  width: 100%;
+  width: 90%;
   height: 300px;
   object-fit: cover;
 }
@@ -51,6 +57,11 @@ h1, h2, h3 {
    transform: scale(1.1);
    transition: transform .2s;
 }
+
+#location {
+    visibility: visible;
+}
+
 
 .glideImage{
   height: 300px;
@@ -130,6 +141,13 @@ input{
   filter: hue-rotate(90deg);
 }
 
+#map {
+    margin-top: 200px;
+    width: 100%;
+    height: 300px;
+    background: grey;
+}
+
 
 .containerLike .imageUserLittle{
   width:50px;
@@ -199,7 +217,7 @@ background-color: blue;
 }
 
 .card-img, .card-img-bottom, .card-img-top {
-    height: 65px;
+    height: 245px;
     object-fit: contain;
 }
 
@@ -219,9 +237,6 @@ background-color: blue;
 
 .card{
   margin: 0 4px;
-  padding: 15px;
-  border:none;
-  border-bottom: 1px rgb(224, 206, 206) solid;
 }
 
 .totalPrice{
