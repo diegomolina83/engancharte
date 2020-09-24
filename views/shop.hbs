@@ -4,7 +4,7 @@
     <table class="table">
         <thead class="thead-dark">
             <tr>
-                
+
                 <th scope="col">Titulo</th>
                 <th scope="col">Image</th>
                 <th scope="col">Precio</th>
@@ -15,21 +15,21 @@
 
             {{#each cart}}
             <tr>
-                
+
                 <td>{{this.title}}</td>
                 <td><a href="/works/details/{{this._id}}"><img class="userListImage" src="{{this.imageUrl}}" alt=""></a>
                     <img src="" alt="" class="likeBtn">
                 </td>
                 <td>{{price}}€</td>
                 <td><a id="btn-cart-delete" class="btn btn-outline-danger" href="/shop/{{_id}}/delete">Borrar
-                </a>
+                    </a>
             </tr>
             {{/each}}
             <td></td>
             <td></td>
             <td></td>
-            
-            
+
+
 
             <td class="totalPrice">
                 <h2>Total: {{totalPrice}}</h2>

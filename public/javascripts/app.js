@@ -84,13 +84,13 @@ function putInCart(id) {
 
 //Función para colorear los corazones 
 function colorearCorazones() {
-    isClick = !isClick
+    
     galleryApp.getCurrentUser()
         .then(response => {
             const heartLikes = response.data[0].likes
 
             heartLikes.forEach(elem => {
-                document.getElementById(elem).src = "/images/blackheart.png"
+                document.getElementById(elem).src = "/images/redheart.png"
                 isClick = !isClick
             })
         })
