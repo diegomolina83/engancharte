@@ -7,5 +7,5 @@ module.exports = app => {
   app.use('/works', require('./works.routes'))
   app.use('/api', require('./api.routes'))
   app.use('/shop', require('./shop.routes'))
-
+  app.use('/', require('./map.routes'))
 }

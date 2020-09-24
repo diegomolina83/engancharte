@@ -1,14 +1,4 @@
-{{!-- <h2>DETALLES DE OBRA</h2>
 
-
-<div class="container">
-    <h2> {{work.title}} </h2><br><br>
-    <img style="width: 500px; margin:20px" src="{{work.imageUrl}}" alt="obra"></img>
-    <article> Description: {{work.description}}</article>
-   <p> Author:  <a href="/users/profile/{{work.user._id}}">{{work.user.username}}</p></a>
-    <p> Tematica: {{work.tematica}}</p>
-</div>
- --}}
 
 <h2>DETALLES DE OBRA</h2>
 
@@ -30,7 +20,8 @@
             <a id="btn-cart-delete" class="btn btn-outline-danger" href="/works/follow/{{_id}}/">Dejar de seguir</a>
         </div>
 
-
+<div id="placesMaps" class="col-md-6" style="height: 700px"></div>
+</div>
 
 
     </div>
@@ -45,3 +36,10 @@
 <script src="/javascripts/map-styles.js"></script>
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZzm0DI7JwThVwysdtDJkdsFCktalySFc&callback=initMap"></script>
+
+
+    
+    
+    
+    
+      
