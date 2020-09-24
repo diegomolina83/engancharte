@@ -71,7 +71,11 @@ h1, h2, h3 {
 .indexImage {
   width: 90%;
   height: 300px;
-  object-fit: contain; }
+  object-fit: cover; }
+
+.indexImage:hover {
+  transform: scale(1.1);
+  transition: transform .2s; }
 
 .glideImage {
   height: 300px;
@@ -94,7 +98,8 @@ h1, h2, h3 {
   height: 46px;
   display: block;
   outline: none;
-  border: 1px solid lightgray; }
+  border: 1px solid lightgray;
+  margin-bottom: 65px; }
 
 #worksField::placeholder {
   color: gray;
@@ -102,5 +107,74 @@ h1, h2, h3 {
 
 input {
   padding: 0 20px; }
+
+/* Container needed to position the button. Adjust the width as needed */
+.containerLike {
+  position: relative;
+  width: 90%; }
+
+/* Make the image responsive */
+.containerLike img {
+  width: 110%;
+  height: 300px; }
+
+/* Style the button and place it in the middle of the container/image */
+.containerLike .btn {
+  position: absolute;
+  top: 91%;
+  left: 95%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 70px;
+  height: 44px;
+  background-color: rgba(218, 224, 229, 0.37); }
+
+.containerLike .btn:hover {
+  filter: hue-rotate(90deg); }
+
+.containerLike .imageUserLittle {
+  width: 50px;
+  height: 30px;
+  object-fit: contain;
+  border-radius: 50%; }
+
+.workDescription {
+  margin-top: -10px; }
+
+.workPrice {
+  margin-top: -19px; }
+
+#logo {
+  display: block;
+  width: 70%;
+  margin: 0 auto;
+  margin-top: -50px; }
+
+.containerIndex {
+  margin-bottom: 18px; }
+
+.nameCard {
+  text-decoration: none;
+  color: gray; }
+
+.nameCard:hover {
+  color: black; }
+
+#price-btn {
+  background-color: rgba(255, 0, 0, 0.35);
+  position: absolute;
+  top: 80%;
+  left: 95%;
+  height: 0%;
+  line-height: 0;
+  color: white;
+  text-align: center; }
+
+.disable-button {
+  background-color: blue; }
 
 /*# sourceMappingURL=style.css.map */

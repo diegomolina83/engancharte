@@ -18,35 +18,6 @@ router.get('/', checkRole(['ADMIN', 'ARTIST', 'USER']), (req, res, next) => {
 })
 
 
-//Creamos un json con todas las obras de la bbdd
-router.get('/api', (req, res, next) => {
-    Works.find()
-        .populate('user')
-        .then(works => { res.json(works) })
-        .catch(err => next(err))
-})
-
-
-//JSON con todos los tags
-router.get('/api/tags/', (req, res, next) => {
-    Works.find()
-        .populate('user')
-        .then(works => { res.json(works) })
-        .catch(err => next(err))
-})
-
-
-//JSON con las obras que contengan el tag name
-router.get('/api/tags/:name', (req, res, next) => {
-    name = req.params.name
-    Works.find({ $or: [{ title: { "$regex": name } }, { tags: { "$regex": name } }, { description: { "$regex": name } }] })
-        .populate('user')
-        .then(works => { res.json(works) })
-        .catch(err => next(err))
-})
-
-
-
 // Crea una obra en la bdd (GET)
 router.get('/create', checkRole(['ADMIN', 'ARTIST']), (req, res, next) => {
     if (req.user.role === 'USER') {

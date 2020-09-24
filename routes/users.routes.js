@@ -1,4 +1,5 @@
 let newFollow = []
+let newLikes = []
 const express = require('express')
 const User = require('../models/user.model')
 const Works = require('../models/works.model')
@@ -6,24 +7,26 @@ const router = express.Router()
 const cdnUploader = require('../configs/cloudinary.config')
 const Picture = require('../models/picture.model')
 const { get } = require('mongoose')
+const bcrypt = require("bcryptjs")
+const bcryptSalt = 10
 
 const checkLoggedIn = (req, res, next) => req.isAuthenticated() ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, incia sesión para continuar' })
 const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && rolesToCheck.includes(req.user.role) ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, no tienes permisos para ver eso.' })
 
+
 //Listado de usuarios
-router.get('/users', checkRole(['ADMIN']), (req, res, next) => {
+router.get('/', checkRole(['ADMIN']), (req, res, next) => {
     User.find()
         .then(users => {
             let msgObj = { msg: "" }
             res.render('users/users-list', { users, msgObj })
         })
         .catch(err => next(err))
-
 })
 
 
 //Borrar usuarios
-router.get('/users/delete/:id', (req, res, next) => {
+router.get('/delete/:id', (req, res, next) => {
     const id = req.params.id
     User.findByIdAndDelete(id)
         .then(() => res.redirect('/users'))
@@ -32,7 +35,7 @@ router.get('/users/delete/:id', (req, res, next) => {
 
 
 //Editar usuarios(GET)
-router.get('/users/edit/:id', checkLoggedIn, (req, res, next) => {
+router.get('/edit/:id', checkLoggedIn, (req, res, next) => {
     const id = req.params.id
     User.findByIdAndUpdate(id)
         .then(user => res.render('users/users-edit', user))
@@ -41,7 +44,7 @@ router.get('/users/edit/:id', checkLoggedIn, (req, res, next) => {
 
 
 //Editar usuarios (POST)
-router.post('/users/edit/:id', checkLoggedIn, cdnUploader.single('imageInput'), (req, res, next) => {
+router.post('/edit/:id', checkLoggedIn, cdnUploader.single('imageInput'), (req, res, next) => {
     const id = req.params.id
     const { username, email } = req.body
     User.findByIdAndUpdate(id, { username, email })
@@ -51,7 +54,7 @@ router.post('/users/edit/:id', checkLoggedIn, cdnUploader.single('imageInput'), 
 
 
 //Perfil del propio usuario
-router.get('/users/my-profile/', checkLoggedIn, (req, res, next) => {
+router.get('/my-profile/', checkLoggedIn, (req, res, next) => {
 
     let id = req.user.id
     const userPromise = User.findById(id)
@@ -63,16 +66,26 @@ router.get('/users/my-profile/', checkLoggedIn, (req, res, next) => {
             .catch(err => next(err))
 
     })
+    //Obras que le gustan
+    const likes = []
+    req.user.likes.forEach(element => {
+        Works.findById(element)
+            .then(work => {
+                console.log(likes)
+                likes.push(work)
+            })
+            .catch(err => next(err))
+    })
 
     //Revisar si se puede hacer con un populate
-    Promise.all([userPromise, usersPromise])
-        .then(results => res.render('users/my-profile', { user: results[0], users: results[1] }))
+    Promise.all([userPromise, usersPromise, likes])
+        .then(results => res.render('users/my-profile', { user: results[0], users: results[1], likes: results[2] }))
         .catch(err => console.log('Error: ', err))
 })
 
 
 //Perfil de usuarios
-router.get('/users/profile/:id', checkLoggedIn, (req, res, next) => {
+router.get('/profile/:id', checkLoggedIn, (req, res, next) => {
     const id = req.params.id
     //controlamos si el botón es "Seguir" o "Dejar de seguir"
     if (req.user.followedUsers.includes(id)) {
@@ -108,12 +121,12 @@ router.get('/users/profile/:id', checkLoggedIn, (req, res, next) => {
 
 
 //Panel de control del administrador
-router.get('/users/admin-control', checkRole(['ADMIN']), (req, res, next) =>
+router.get('/admin-control', checkRole(['ADMIN']), (req, res, next) =>
     res.render('users/admin-control'))
 
 
 //Seguir usuarios
-router.get('/users/follow/:id', checkLoggedIn, (req, res, next) => {
+router.get('/follow/:id', checkLoggedIn, (req, res, next) => {
     newFollow = req.user.followedUsers   //El array se llena con los usuarios a los que sigue el user
     if (!req.user.followedUsers.includes(req.params.id)) {
         newFollow.push(req.params.id)
@@ -125,7 +138,7 @@ router.get('/users/follow/:id', checkLoggedIn, (req, res, next) => {
 })
 
 //Dejar de seguir
-router.get('/users/unfollow/:id', checkLoggedIn, (req, res, next) => {
+router.get('/unfollow/:id', checkLoggedIn, (req, res, next) => {
     let unfollow = req.user.followedUsers
     if (unfollow.includes(req.params.id)) {
         let index = unfollow.indexOf(req.params.id)
@@ -138,11 +151,37 @@ router.get('/users/unfollow/:id', checkLoggedIn, (req, res, next) => {
 })
 
 
+//Cambiar la contraseña(GET)
+router.get('/edit/changePassword/:id', (req, res, next) => {
+    let id = req.params.id
+    console.log("ID:        ",)
+    User.findById(id)
+        .then(user => {
+            console.log("-------------", user)
+            res.render('users/change-password.hbs', user)
+        })
+        .catch(err => next(err))
+})
+
+
+//Cambiar la contraseña(POST)
+router.post('/edit/changePassword/:id', checkLoggedIn, (req, res, next) => {
+    const id = req.params.id
+    const { password } = req.body
+    console.log("Imprime REQBODY: ", req.body,)
+    const salt = bcrypt.genSaltSync(bcryptSalt)
+    const hashPass = bcrypt.hashSync(password, salt)
+    User.findByIdAndUpdate(id, { password: hashPass })
+        .then(() => res.redirect('/'))
+        .catch(err => next(err))
+})
+
+
 module.exports = router
 
 
 
-//Cambiar la contraseña
+
 
 //Cambiar la imagen
 // if (req.file) {

@@ -1,52 +1,41 @@
-{{!-- 
-<h2>title: {{title}}  || author: {{author.username}}</h2><br>
-<p>temática: {{tematica}}</p>
-
-<img style="height: 70px;" src="{{imageUrl}}" alt="User image profile"><br><br>
-<a href="/works/details/{{id}}"> Ver detalles de obra</a>
-<li> Precio {{price}}€</li><br><br>
-{{/each}}
-  {{#if errorMsg}}
-    <div id="errorMsg">{{{errorMsg}}}</div>
-  {{/if}} --}}
-
-
 <div class="container">
 
 
 
-<table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Titulo</th>
-      <th scope="col">Image</th>
-      <th scope="col">Autor</th>
-      <th scope="col">Precio</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Titulo</th>
+        <th scope="col">Image</th>
+        <th scope="col">Autor</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+
       {{#each works}}
-    <tr>
-      <th scope="row"><a href="/users/profile/{{_id}}">+</a></th>
-      <td>{{title}}</td>
-      <td><img class="userListImage" src="{{imageUrl}}" alt=""></td>
-      <td>{{author.username}}</td>
-      <td>{{price}}€</td>
-      <td><a class="btn btn-outline-danger" href="/works/{{_id}}/delete/">Eliminar</a>
-      <a class="btn btn-outline-primary" href="/works/{{_id}}/edit/">Editar</a>
-      {{!-- <a class="follow btn btn-outline-success" href="/users/follow/{{_id}}">Seguir</a> --}}
-      {{!-- <a class="{{../msgObj.msg}} btn btn-outline-warning" href="/users/unfollow/{{_id}}">Dejar de seguir </a></td> --}}
-      
-     
-      
+      <tr>
+        <th scope="row"><a href="/works/details/{{_id}}">+</a></th>
+        <td>{{title}}</td>
+        <td><img class="userListImage" src="{{imageUrl}}" alt="">
+          <img src="" alt="" class="likeBtn">
+        </td>
+        <td>{{author.username}}</td>
+        <td>{{price}}€</td>
+        <td><a class="btn btn-outline-danger" href="/works/{{_id}}/delete/">Eliminar</a>
+          <a class="btn btn-outline-primary" href="/works/{{_id}}/edit/">Editar</a>
+          {{!-- <a class="follow btn btn-outline-success" href="/users/follow/{{_id}}">Seguir</a> --}}
+          {{!-- <a class="{{../msgObj.msg}} btn btn-outline-warning" href="/users/unfollow/{{_id}}">Dejar de seguir </a></td> --}}
 
 
-    </tr>
-    {{/each}}
-     </tbody>
-</table>
+
+
+
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 
 </div>
