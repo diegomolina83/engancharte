@@ -1,4 +1,4 @@
-<h2>DETALLES DE OBRA</h2>
+{{!-- <h2>DETALLES DE OBRA</h2>
 
 
 <div class="container">
@@ -8,4 +8,37 @@
    <p> Author:  <a href="/users/profile/{{work.user._id}}">{{work.user.username}}</p></a>
     <p> Tematica: {{work.tematica}}</p>
 </div>
+ --}}
 
+<h2>DETALLES DE OBRA</h2>
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm">
+            <h2> {{work.title}} </h2><br><br>
+            <img id="image-work" src="{{work.imageUrl}}" alt="obra"></img>
+            <article> Description: {{work.description}}</article>
+            <p> Author: <a href="/users/profile/{{work.user._id}}">{{work.user.username}}</p></a>
+            <p> Tematica: {{work.tematica}}</p>
+        </div>
+        <div class="col-sm">
+            <div id="map"></div>
+            <p>Localización de obra: </p>
+            <div id="location"> {{work.location}} </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+
+
+
+<script src="/javascripts/maps.js"></script>
+<script src="/javascripts/map-styles.js"></script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZzm0DI7JwThVwysdtDJkdsFCktalySFc&callback=initMap"></script>

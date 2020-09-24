@@ -18,7 +18,7 @@ window.onload = () => {
                 html += `<div class="containerIndex col-sm-4">
                              <div class="containerLike">
                              <p ><a onClick="getWorksId('${elm._id}') class="nameCard" href="/users/profile/${elm.user._id}"><img class="imageUserLittle" src="${elm.user.imageUrl}" alt="">${elm.user.username}</p></a>
-                            <a  "href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
+                            <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
                            
                             <a id="price-btn" data-toggle="modal" data-target="#exampleModalLong" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
                              <a id="like-btn"><img onClick="getIdFavorites('${elm._id}')" class="btn" src="/images/NicePng_balloon-png_23089.png" alt="boton de like"></a>
@@ -35,10 +35,8 @@ window.onload = () => {
     //     .then(response => {
     //         html2 = ''
     //         shuffle(response.data)
-    //        console.log("ID++++++++++++++++++++++++++++++++",workId)
     //         response.data.forEach(elm => {
-    //             console.log("ELM--------------------------------------",elm)
-    //             coloredLikes(elm)
+    //         coloredLikes(elm)
     //             html2 += `<div class="containerIndex col-sm-4">
     //                          <div class="containerLike">
     //                          <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
@@ -83,7 +81,7 @@ document.querySelector('#worksField').onkeyup = () => {
 //Funcion
 
 function getWorksId(id) {
-   
+    workId = id
    
     galleryApp
         .getWorksFromUser(id)
@@ -92,8 +90,7 @@ function getWorksId(id) {
             shuffle(response.data)
             
             response.data.forEach(elm => {
-                // coloredLikes(elm)
-                console.log("-+-+-+-+-+-+-+-+-+-+ELM",elm)
+                coloredLikes(elm)
                 html2 += `<div class="containerIndex col-sm-4">
                              <div class="containerLike">
                              <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
