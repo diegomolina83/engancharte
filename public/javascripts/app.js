@@ -185,25 +185,25 @@ let likes = []
 let cart = []
 const galleryApp = new WorksApiHandler()
 let workId
-
+let isClick = true
 
 
 window.onload = () => {
-
     galleryApp
-        .getWorksIndex()
-        .then(response => {
-            html = ''
-            shuffle(response.data)
-            console.log(response.data)
-            response.data.forEach(elm => {
-                coloredLikes(elm)
+    .getWorksIndex()
+    .then(response => {
+        html = ''
+        shuffle(response.data)
+        console.log(response.data)
+        response.data.forEach(elm => {
+            colorearCorazones()
+            coloredLikes(elm)
                 html += `<div class="containerIndex col-sm-4">
                              <div class="containerLike">
                              <p ><a class="nameCard" href="/users/profile/${elm.user._id}"><img class="imageUserLittle" src="${elm.user.imageUrl}" alt="">${elm.user.username}</p></a>
                              <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
                              <a id="price-btn" data-toggle="modal" data-target="#exampleModalLong" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
-                             <a id="like-btn"><img onClick="getIdFavorites('${elm._id}')" class="btn" src="/images/NicePng_balloon-png_23089.png" alt="boton de like"></a>
+                             <a id="like-btn"><img id="${elm._id}" onClick="getIdFavorites('${elm._id}')" class="btn" src="/images/NicePng_balloon-png_23089.png" alt="boton de like"></a>
                             </div> 
                              <h3>${elm.title}</h3>
                             <p class="workDescription">${elm.description}</p>
@@ -263,7 +263,9 @@ document.querySelector('#worksField').onkeyup = () => {
 //Funcion para los likes
 
 function getIdFavorites(id) {
+    changeColor(id)
     likes.push(id)
+    isClick = !isClick
     document.querySelector('#like-btn')
     if (likes.length > 1) likes.shift()
     galleryApp
@@ -271,6 +273,11 @@ function getIdFavorites(id) {
 
 }
 
+
+function changeColor(id) {
+    
+    isClick == true ? document.getElementById(id).src = "/images/NicePng_balloon-png_23089.png" : document.getElementById(id).src = "/images/defecto.png"
+}
 
 //Funcion para la tienda
 
@@ -282,11 +289,26 @@ function putInCart(id) {
         .getCart(cart)
 }
 
+function colorearCorazones() {
+    galleryApp.getCurrentUser()
+        .then(response => {
+            const heartLikes = response.data[0].likes
+            
+            heartLikes.forEach(elem => {
+                document.getElementById(elem).src = "/images/defecto.png"
+
+            })
+                
+        })
+        .catch(err => next(err))
+    
+}
+
 
 //Funcion para cambiar el color de los corazones
 function cambiarColor(id) {
-    console.log("Obra añadida al carro")
-
+    console.log("...............",id)
+    
 }
 
 
