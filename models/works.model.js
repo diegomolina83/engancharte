@@ -25,11 +25,12 @@ const workSchema = new Schema({
     },
     author: String,
     user: { type: Schema.Types.ObjectId, ref: 'User' },
-    tags:[String],
-    likes: {
-        type: [Number]
+    tags: {
+        type: [String],
+        trim: true,
+        lowercase:true
     },
-    location : {
+    location: {
         type: String
     }
 }, {

@@ -11,147 +11,107 @@ const checkLoggedIn = (req, res, next) => req.isAuthenticated() ? next() : res.r
 const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && rolesToCheck.includes(req.user.role) ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, no tienes permisos para ver eso.' })
 
 
-// Musetra todas las obras de la bbdd
+// Muestra todas las obras de la bbdd
 router.get('/', checkRole(['ADMIN', 'ARTIST', 'USER']), (req, res, next) => {
-
-	Works.find()
-		.then(works => res.render('works/indexWorks', {works}))
-		.catch(err => console.log(err))   
+    Works.find()
+        .then(works => { res.render('works/indexWorks', { works }) })
+        .catch(err => next(err))
 })
 
 
-//Creamos un json con todas las obras de la bbdd
-router.get('/api', (req, res, next) => {
-
-    Works.find({})
-    	.populate('user')
-			.then(works => { res.json(works)})
-			.catch(err => console.log(err))   
-})
-
-//JSON con todos los tags
-router.get('/api/tags/',  (req, res, next) => {
-    Works.find({})
-    	.populate('user')
-			.then(works => { res.json(works)})
-			.catch(err => console.log(err))
-})
-
-//JSON con las obras que contengan el tag name
-router.get('/api/tags/:name',  (req, res, next) => {
-
-    name = req.params.name
-  
-    Works.find({tags:{ "$regex": name}})
-    	.populate('user')
-        	.then(works => { res.json(works)})    
-})
-
-// Crea una obra en la bdd
-router.get('/create', checkRole(['ADMIN', 'ARTIST']),(req, res, next) => { 
+// Crea una obra en la bdd (GET)
+router.get('/create', checkRole(['ADMIN', 'ARTIST']), (req, res, next) => {
     if (req.user.role === 'USER') {
-        res.render("/works", {errorMsg: "Debes ser artista"})
+        res.render("/works", { errorMsg: "Debes ser artista" })
         return
     }
-    res.render("works/createWorks")})
-
-router.post('/create', cdnUploader.single('imageInput'),(req, res, next) => { 
-    const {title, description, tags, author , price, location} = req.body
-
-    const idUser = req.user.id
-    const tematica= tags.split(',')
+    res.render("works/createWorks")
+})
 
 
+// Crea una obra en la bdd (POST)
+router.post('/create', cdnUploader.single('imageInput'), (req, res, next) => {
+    const { title, description, tags, author, price } = req.body
+    const tematica = tags.split(',')
     if (!title || !description || !price) {
         res.render("works/createWorks", { errorMsg: "Rellena los campos titulo, descripcion y precio" })
         return
     }
-
     if (req.file) {
-
-        if(req.file.size>2000000){
+        if (req.file.size > 2000000) {
             res.render("auth/signup", { errorMsg: "El tamaño de la imagen no puede ser superior a 2 MB" })
             return
-        } 
-
+        }
         Picture.create({
-            name:req.file.originalname,
-            path:req.file.path,
+            name: req.file.originalname,
+            path: req.file.path,
             originalName: req.file.originalname
-            })
-            imageUrl= req.file.path
-      } else {
-          imageUrl='../images/defecto.png'
-      }
+        })
+            .then(() => console.log("imagen creada"))
+            .catch(err => next(err))
 
-    Works.create({title, description, tags:tematica, imageUrl, author, price, user:req.user, location})
-		.then(res.redirect('/'))
-		.catch(res => console.log(res))
+        imageUrl = req.file.path
+    } else {
+        imageUrl = '../images/defecto.png'
+    }
+    Works.create({ title, description, tags: tematica, imageUrl, author, price, user: req.user })
+        .then(res.redirect('/'))
+        .catch(err => next(err))
 })
 
 
 // Muestra los detalles de cada obra
 router.get('/details/:id', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, next) => {
-
     const id = req.params.id
-	Works.findByIdAndUpdate(id)
-		.populate('user')
-			.then(work => res.render('works/detailsWorks', {work}))
-			.catch(err => console.log(err))
+    Works.findByIdAndUpdate(id)
+        .populate('user')
+        .then(work => res.render('works/detailsWorks', { work }))
+        .catch(err => next(err))
 })
 
 
-// Muestra las obras del artista loggeado
+// Muestra las obras del artista logueado
 router.get('/my-works', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, next) => {
-
-let myWorks=[]
-    
+    let myWorks = []
     Works.find()
-    	.populate('user')
-    		.then(worksUser =>{
-        		worksUser.forEach(element => {
-        			if(element.user.id == req.user.id){
-            		myWorks.push(element)
-        			}
-   				})
-				res.render('works/viewMyWorks', {myWorks})
-			})
-			.catch(err => console.log(err))
+        .populate('user')
+        .then(worksUser => {
+            worksUser.forEach(element => {
+                if (element.user.id == req.user.id) {
+                    myWorks.push(element)
+                }
+            })
+            res.render('works/viewMyWorks', { myWorks })
+        })
+        .catch(err => next(err))
 })
 
 
 // Borrar obra
-router.get('/:id/delete', (req, res) => {
-
-	const id = req.params.id
-	Works.findByIdAndDelete(id)
-		.then(deleteWork => res.redirect('back'))
-        .catch(err => console.log(err))
+router.get('/:id/delete', (req, res, next) => {
+    const id = req.params.id
+    Works.findByIdAndDelete(id)
+        .then(deleteWork => res.redirect('back'))
+        .catch(err => next(err))
 })
 
 
-// Editar obra
-router.get('/:id/edit', (req, res) => {
-    
+// editar obra (GET)
+router.get('/:id/edit', (req, res, next) => {
     const id = req.params.id
-    
-
-	Works.findByIdAndUpdate(id)
-		.then(work => res.render('works/editWorks', work))
-		.catch(err => console.log(err))
+    Works.findByIdAndUpdate(id)
+        .then(work => res.render('works/editWorks', work))
+        .catch(err => next(err))
 })
 
-router.post('/:id/edit',checkLoggedIn, (req, res) => {
 
+// editar obra (POST)
+router.post('/:id/edit', checkLoggedIn, (req, res, next) => {
     const id = req.params.id
-    const {title, author, description,tags,price} = req.body
-
-   
-    Works.findByIdAndUpdate(id, {title, author, description,tags,price})
-        .then(() =>  res.redirect('/'))
-        .catch(err => console.log(err))
-
-
+    const { title, author, description, tags, price } = req.body
+    Works.findByIdAndUpdate(id, { title, author, description, tags, price })
+        .then(() => res.redirect('/'))
+        .catch(err => next(err))
 })
 
 module.exports = router

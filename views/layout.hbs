@@ -27,7 +27,7 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
+        <li class="nav-item">
           <a class="{{shop}} nav-link" href="/shop">Shop</a>
         </li>
         <li class="nav-item">
@@ -36,7 +36,7 @@
         <li class="nav-item">
           <a class="{{iniciar}} nav-link" href="/login">Iniciar sesión</a>
         </li>
-         <li class="nav-item">
+        <li class="nav-item">
           <a class="{{profile}} nav-link" href="/users/my-profile">Perfil</a>
         </li>
         <li class="nav-item">
@@ -49,20 +49,51 @@
           <a class="{{verMisObras}} nav-link" href="/works/my-works/">Mis obras</a>
         </li>
         <li class="nav-item">
-         <a class="{{admin}} nav-link" href="/users/admin-control">Panel de control</a> 
+          <a class="{{admin}} nav-link" href="/users/admin-control">Panel de control</a>
         </li>
         <li class="nav-item">
           <a class="{{cerrar}} nav-link" href="/logout">Cerrar sesión</a>
         </li>
-        
+
       </ul>
     </div>
   </nav>
 
   <main class="container">
     {{{body}}}
-  </main>
 
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">¡Enhorabuena!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>¡Obra añadida al carrito!</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Aceptar</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </main>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+    crossorigin="anonymous"></script>
   <script src="/javascripts/script.js"></script>
 
 </body>
