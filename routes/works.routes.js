@@ -30,7 +30,7 @@ router.get('/create', checkRole(['ADMIN', 'ARTIST']), (req, res, next) => {
 
 // Crea una obra en la bdd (POST)
 router.post('/create', cdnUploader.single('imageInput'), (req, res, next) => {
-    const { title, description, tags, author, price } = req.body
+    const { title, description, tags, author, price, location } = req.body
     const tematica = tags.split(',')
     if (!title || !description || !price) {
         res.render("works/createWorks", { errorMsg: "Rellena los campos titulo, descripcion y precio" })
@@ -53,7 +53,7 @@ router.post('/create', cdnUploader.single('imageInput'), (req, res, next) => {
     } else {
         imageUrl = '../images/defecto.png'
     }
-    Works.create({ title, description, tags: tematica, imageUrl, author, price, user: req.user })
+    Works.create({ title, description, tags: tematica, imageUrl, author, price, user: req.user, location })
         .then(res.redirect('/'))
         .catch(err => next(err))
 })

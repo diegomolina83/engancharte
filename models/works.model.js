@@ -25,6 +25,9 @@ const workSchema = new Schema({
         type: [String],
         trim: true,
         lowercase:true
+    },
+    location: {
+        type: String
     }
 }, {
     timestamps: true
