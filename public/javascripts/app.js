@@ -17,10 +17,9 @@ window.onload = () => {
                 coloredLikes(elm)
                 html += `<div class="containerIndex col-sm-4">
                              <div class="containerLike">
-                             <p ><a onClick="getWorksId('${elm._id}') class="nameCard" href="/users/profile/${elm.user._id}"><img class="imageUserLittle" src="${elm.user.imageUrl}" alt="">${elm.user.username}</p></a>
-                            <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
-                           
-                            <a id="price-btn" data-toggle="modal" data-target="#exampleModalLong" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
+                             <p ><a class="nameCard" href="/users/profile/${elm.user._id}"><img class="imageUserLittle" src="${elm.user.imageUrl}" alt="">${elm.user.username}</p></a>
+                             <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
+                             <a id="price-btn" data-toggle="modal" data-target="#exampleModalLong" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
                              <a id="like-btn"><img onClick="getIdFavorites('${elm._id}')" class="btn" src="/images/NicePng_balloon-png_23089.png" alt="boton de like"></a>
                             </div> 
                              <h3>${elm.title}</h3>
@@ -29,7 +28,7 @@ window.onload = () => {
             document.querySelector('#works').innerHTML = html
         })
         .catch(err => console.log(err))
-    
+
     // galleryApp
     //     .getWorksFromUser(workId)
     //     .then(response => {
@@ -66,7 +65,7 @@ document.querySelector('#worksField').onkeyup = () => {
                              <div class="containerLike">
                              <p ><a class="nameCard" href="/users/profile/${elm.user._id}"><img class="imageUserLittle" src="${elm.user.imageUrl}" alt="">${elm.user.username}</p></a>
                             <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
-                             <a id="price-btn" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
+                            <a id="price-btn" data-toggle="modal" data-target="#exampleModalLong" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
                              <a id="like-btn"><img onClick="getIdFavorites('${elm._id}')" class="btn" src="/images/NicePng_balloon-png_23089.png" alt="boton de like"></a>
                             </div> 
                              <h3>${elm.title}</h3>
@@ -76,40 +75,6 @@ document.querySelector('#worksField').onkeyup = () => {
         })
         .catch(err => console.log(err))
 }
-
-
-//Funcion
-
-function getWorksId(id) {
-    workId = id
-   
-    galleryApp
-        .getWorksFromUser(id)
-        .then(response => {
-            html2 = ''
-            shuffle(response.data)
-            
-            response.data.forEach(elm => {
-                coloredLikes(elm)
-                html2 += `<div class="containerIndex col-sm-4">
-                             <div class="containerLike">
-                             <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
-                            <a id="price-btn" data-toggle="modal" data-target="#exampleModalLong" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
-                             <a id="like-btn"><img onClick="getIdFavorites('${elm._id}')" class="btn" src="/images/NicePng_balloon-png_23089.png" alt="boton de like"></a>
-                            </div> 
-                             <h3>${elm.title}</h3>
-                            <p class="workDescription">${elm.description}</p>
-                          </div>`})
-            document.querySelector('#worksuser').innerHTML = html2
-        })
-        .catch(err => console.log(err))
-}
-
-
-
-
-
-
 
 
 //Funcion para los likes
@@ -129,7 +94,7 @@ function getIdFavorites(id) {
 function putInCart(id) {
     cambiarColor(id)
     cart.push(id)
-    if(cart.length>1)cart.shift()
+    if (cart.length > 1) cart.shift()
     galleryApp
         .getCart(cart)
 }
@@ -138,7 +103,7 @@ function putInCart(id) {
 //Funcion para cambiar el color de los corazones
 function cambiarColor(id) {
     console.log("Obra añadida al carro")
-    
+
 }
 
 

@@ -1,5 +1,5 @@
 module.exports = app => {
-    app.locals.title = 'Enganch-arte'
+    app.locals.title = 'EnganchArte'
     app.locals.admin = 'oculto'
     app.locals.cerrar = 'oculto'
     app.locals.profile = 'oculto'

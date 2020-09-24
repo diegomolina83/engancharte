@@ -35,8 +35,14 @@ h1, h2, h3 {
 
 }
 
+.indexImageDetail{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .indexImage{
-  width: 90%;
+  width: 100%;
   height: 300px;
   object-fit: cover;
 }
@@ -193,7 +199,7 @@ background-color: blue;
 }
 
 .card-img, .card-img-bottom, .card-img-top {
-    height: 245px;
+    height: 65px;
     object-fit: contain;
 }
 
@@ -213,8 +219,51 @@ background-color: blue;
 
 .card{
   margin: 0 4px;
+  padding: 15px;
+  border:none;
+  border-bottom: 1px rgb(224, 206, 206) solid;
 }
 
 .totalPrice{
   margin:1px;
 }
+
+
+@media (min-width: 481px) and (max-width: 767px) {
+  
+  #logo{
+  display:block;
+  width: 100%;
+  margin:0 auto;
+  margin-top: -50px;
+}
+  
+#worksField {
+    
+    width: 90%;
+}
+}
+
+
+@media (min-width: 320px) and (max-width: 480px) {
+  
+ #logo{
+  display:block;
+  width: 100%;
+  margin:0 auto;
+  margin-top: -50px;
+}
+
+#worksField {
+  width: 90%;
+  
+}
+// .card{
+// display:flex;
+// flex-direction: row;
+// border:none;
+
+// }
+
+}
+

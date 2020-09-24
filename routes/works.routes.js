@@ -113,4 +113,32 @@ router.post('/:id/edit', checkLoggedIn, (req, res, next) => {
         .catch(err => next(err))
 })
 
+
+//Eliminar obras de me gusta
+router.get('/unfollow/:id', checkLoggedIn, (req, res, next) => {
+    let tempLikes = req.user.likes
+    if (tempLikes.includes(req.params.id)) {
+        let index = tempLikes.indexOf(req.params.id)
+        tempLikes.splice(index,1)    
+    User.findByIdAndUpdate(req.user.id, { likes: tempLikes })
+        .then(() => res.redirect('back'))
+        .catch(err => next(err))
+    }else {console.log("no lo seguías")}
+})
+
+
+//Seguir Obras
+router.get('/follow/:id', checkLoggedIn, (req, res, next) => {
+    newFollow = req.user.likes   //El array se llena con los usuarios a los que sigue el user
+    if (!req.user.likes.includes(req.params.id)) {
+        newFollow.push(req.params.id)
+        User.findByIdAndUpdate(req.user.id, { likes: newFollow })
+            .then(() => res.redirect('back'))
+            .catch(err => next(err))
+    }
+    else console.log("YA ESTÁ INCLUIDO")
+})
+
 module.exports = router
+
+
