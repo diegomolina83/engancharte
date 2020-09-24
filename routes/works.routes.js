@@ -30,7 +30,7 @@ router.get('/create', checkRole(['ADMIN', 'ARTIST']), (req, res, next) => {
 
 // Crea una obra en la bdd (POST)
 router.post('/create', cdnUploader.single('imageInput'), (req, res, next) => {
-    const { title, description, tags, author, price } = req.body
+    const { title, description, tags, price } = req.body
     const tematica = tags.split(',')
     if (!title || !description || !price) {
         res.render("works/createWorks", { errorMsg: "Rellena los campos titulo, descripcion y precio" })
@@ -53,7 +53,7 @@ router.post('/create', cdnUploader.single('imageInput'), (req, res, next) => {
     } else {
         imageUrl = '../images/defecto.png'
     }
-    Works.create({ title, description, tags: tematica, imageUrl, author, price, user: req.user })
+    Works.create({ title, description, tags: tematica, imageUrl, price, user: req.user })
         .then(res.redirect('/'))
         .catch(err => next(err))
 })
@@ -107,8 +107,8 @@ router.get('/:id/edit', (req, res, next) => {
 // editar obra (POST)
 router.post('/:id/edit', checkLoggedIn, (req, res, next) => {
     const id = req.params.id
-    const { title, author, description, tags, price } = req.body
-    Works.findByIdAndUpdate(id, { title, author, description, tags, price })
+    const { title, description, tags, price } = req.body
+    Works.findByIdAndUpdate(id, { title, description, tags, price })
         .then(() => res.redirect('/'))
         .catch(err => next(err))
 })
@@ -119,11 +119,11 @@ router.get('/unfollow/:id', checkLoggedIn, (req, res, next) => {
     let tempLikes = req.user.likes
     if (tempLikes.includes(req.params.id)) {
         let index = tempLikes.indexOf(req.params.id)
-        tempLikes.splice(index,1)    
-    User.findByIdAndUpdate(req.user.id, { likes: tempLikes })
-        .then(() => res.redirect('back'))
-        .catch(err => next(err))
-    }else {console.log("no lo seguías")}
+        tempLikes.splice(index, 1)
+        User.findByIdAndUpdate(req.user.id, { likes: tempLikes })
+            .then(() => res.redirect('back'))
+            .catch(err => next(err))
+    } else { console.log("no lo seguías") }
 })
 
 

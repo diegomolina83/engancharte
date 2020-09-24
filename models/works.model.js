@@ -12,19 +12,15 @@ const workSchema = new Schema({
     description: {
         type: String
     },
-    tematica: {
-        type: String
-    },
     price: {
         type: Number,
         required: true
     },
-    author: String,
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     tags: {
         type: [String],
         trim: true,
-        lowercase:true
+        lowercase: true
     }
 }, {
     timestamps: true
