@@ -2,8 +2,6 @@ const express = require('express')
 const Works = require('../models/works.model')
 const router = require("./index.routes")
 
-let varDB
-
 router.get('/maps', (req, res) => {
     const {location} = req.body
     res.render('apiHere', {location})
@@ -23,4 +21,4 @@ router.post('/maps', (req, res) => {
 })
 
 
-module.exports = router, varDB
+module.exports = router

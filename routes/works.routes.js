@@ -57,9 +57,10 @@ router.get('/create', checkRole(['ADMIN', 'ARTIST']),(req, res, next) => {
 
 router.post('/create', cdnUploader.single('imageInput'),(req, res, next) => { 
     const {title, description, tags, author , price, location} = req.body
-    console.log(location)
+
     const idUser = req.user.id
     const tematica= tags.split(',')
+
 
     if (!title || !description || !price) {
         res.render("works/createWorks", { errorMsg: "Rellena los campos titulo, descripcion y precio" })

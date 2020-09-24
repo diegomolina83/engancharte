@@ -1,7 +1,6 @@
 
 
        window.onload = () => {
-
             axios.get('http://localhost:3000/works/api')
                  .then(response => {
                     html = ''
@@ -16,6 +15,7 @@
                                     <p>${elm.price}€</p>
                             </div>`)
                     document.querySelector('#works').innerHTML = html
+                    console.log(document.querySelector('#location'))
                 })
         }
 
@@ -23,6 +23,10 @@
 
         document.querySelector('#worksField').onkeyup = () => {
             const searchName=document.querySelector('#worksField').value
+           // console.log(title.charAt(0).toUpperCase() + title)
+           // console.log(location)
+            console.log(searchName.charAt(0).toLowerCase())
+        
             axios.get(`http://localhost:3000/works/api/tags/${searchName}`)
                      .then(response => {
                         html = ''

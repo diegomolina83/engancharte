@@ -47,8 +47,9 @@ body {
   font-weight: 200; }
 
 #map {
-  width: 95%;
-  height: 450px;
+  margin-top: 200px;
+  width: 100%;
+  height: 300px;
   background: grey; }
 
 h1, h2, h3 {
@@ -73,10 +74,16 @@ h1, h2, h3 {
   height: 100px;
   object-fit: cover; }
 
+#image-work {
+  width: 100%; }
+
 .indexImage {
   width: 90%;
   height: 300px;
   object-fit: contain; }
+
+#location {
+  visibility: visible; }
 
 .glideImage {
   height: 300px;

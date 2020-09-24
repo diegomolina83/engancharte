@@ -6,6 +6,7 @@ const workSchema = new Schema({
         type: String,
         required: true,
         default: 'Sin titulo'
+
     },
     imageUrl: {
         type: String,
