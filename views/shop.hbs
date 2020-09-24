@@ -1,1 +1,44 @@
-<h1>Esta es la tienda</h1>
+<h1>Esta es la tienda de {{user.username}}</h1>
+
+
+
+
+
+
+<div class="container">
+
+
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Titulo</th>
+                <th scope="col">Image</th>
+                <th scope="col">Autor</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Handle</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {{#each cart}}
+            <tr>
+                <th scope="row"><a href="/works/details/{{this._id}}">+</a></th>
+                <td>{{this.title}}</td>
+                <td><img class="userListImage" src="{{this.imageUrl}}" alt="">
+                    <img src="" alt="" class="likeBtn">
+                </td>
+                <td>{{author.username}}</td>
+                <td>{{price}}€</td>
+                <td><a class="btn btn-outline-danger" href="/works/{{_id}}/delete/">Eliminar</a>
+                    
+
+            </tr>
+            {{/each}}
+
+           <h2>total: {{totalPrice.totalPrice}}</h2> 
+        </tbody>
+    </table>
+
+</div>

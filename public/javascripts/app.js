@@ -1,96 +1,96 @@
 let likes = []
+let cart = []
 const galleryApp = new WorksApiHandler()
+let id
+document.querySelector('#worksField').onkeyup = () => {
 
-// document.querySelector('#worksField').onkeyup = () => {
-
-//     const searchName = document.querySelector('#worksField').value
-//     galleryApp
-//         .getWorks(searchName)
-//         .then(response => {
-//             html = ''
-//             shuffle(response.data)
-//             response.data.forEach(elm =>
-//                 html += `<div class="col-sm-4">
-//                             <div class="containerLike">
-//                             <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
-//                              <a href="/works/like/${elm._id}"><button id="like-btn" class="btn"></button></a>
-//                             </div> 
-//                             <h3>${elm.title}</h3>
-//                             <p>${elm.description}</p>
-//                             <p> Artista: <a href="/users/profile/${elm.user._id}">${elm.user.username}</p></a>
-//                             <p>${elm.price}€</p>
-//                          </div>`)
-//             document.querySelector('#works').innerHTML = html
-//         })
-//         .catch(err => next(err))
-// }
+    const searchName = document.querySelector('#worksField').value
+    galleryApp
+        .getWorks(searchName)
+        .then(response => {
+            html = ''
+            shuffle(response.data)
+            response.data.forEach(elm =>
+                html += `<div class="containerIndex col-sm-4">
+                             <div class="containerLike">
+                             <p ><a class="nameCard" href="/users/profile/${elm.user._id}"><img class="imageUserLittle" src="${elm.user.imageUrl}" alt="">${elm.user.username}</p></a>
+                            <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
+                             <a id="price-btn" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
+                             <a id="like-btn"><img onClick="getIdFavorites('${elm._id}')" class="btn" src="/images/NicePng_balloon-png_23089.png" alt="boton de like"></a>
+                            </div> 
+                             <h3>${elm.title}</h3>
+                            <p class="workDescription">${elm.description}</p>
+                          </div>`)
+            document.querySelector('#works').innerHTML = html
+        })
+        .catch(err => console.log(err))
+}
 
 
-// window.onload = () => {
+window.onload = () => {
 
-//     galleryApp
-//         .getWorksIndex()
-//         .then(response => {
-//             html = ''
-//             shuffle(response.data)
-//             response.data.forEach(elm =>
-//                 html += `<div class="col-sm-4">
-//                              <div class="containerLike">
-//                             <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
-//                             <a href="/works/like/${elm._id}"><button id="like-btn" class="btn"></button></a>
-//                             </div> 
-//                              <h3>${elm.title}</h3>
-//                             <p>${elm.description}</p>
-//                             <p>Artista: <a href="/users/profile/${elm.user._id}">${elm.user.username}</p></a>
-//                             <p>Precio: ${elm.price}€</p>
-//                           </div>`)
-//             document.querySelector('#works').innerHTML = html
-//         })
-//         .catch(err => next(err))
-// }
-
-// document.getElementById('like-btn').onclick = () => {
-//     events.preventDefault()
-//     alert("funciona")
-//     // galleryApp
-//     //     .getLikes()
-//     //     .then(response => console.log(response.data))
-// }
-
-window.addEventListener("load", () => {
     galleryApp
         .getWorksIndex()
         .then(response => {
             html = ''
             shuffle(response.data)
-            response.data.forEach(elm =>
-                html += `<div class="col-sm-4">
+            console.log(response.data)
+            response.data.forEach(elm => {
+                // coloredLikes(elm)
+                html += `<div class="containerIndex col-sm-4">
                              <div class="containerLike">
+                             <p ><a class="nameCard" href="/users/profile/${elm.user._id}"><img class="imageUserLittle" src="${elm.user.imageUrl}" alt="">${elm.user.username}</p></a>
                             <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
-                            <a role="button" id="like-btn" class="btn" href="/works/like/${elm._id}"></a>
-                            <button  id="boton"> Hola </button >
+                             <a id="price-btn" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
+                             <a id="like-btn"><img onClick="getIdFavorites('${elm._id}')" class="btn" src="/images/NicePng_balloon-png_23089.png" alt="boton de like"></a>
                             </div> 
                              <h3>${elm.title}</h3>
-                            <p>${elm.description}</p>
-                            <p>Artista: <a href="/users/profile/${elm.user._id}">${elm.user.username}</p></a>
-                            <p>Precio: ${elm.price}€</p>
-                          </div>`)
+                            <p class="workDescription">${elm.description}</p>
+                          </div>`})
             document.querySelector('#works').innerHTML = html
         })
-        .catch(err => next(err))
-    // const botoncillo = document.querySelector(".container")
-    // botoncillo.innerHTML +=`<button  id="boton"> Hola </button >`
-        
-
-    document.getElementById('boton').addEventListener("click", function (event) {
-           
-        
-        alert("funciona")
+        .catch(err => console.log(err))
+}
 
 
-    })
 
-})
+
+//Funcion para los likes
+
+function getIdFavorites(id) {
+    likes.push(id)
+    document.querySelector('#like-btn')
+    if (likes.length > 1) likes.shift()
+    galleryApp
+        .getLikes(likes)
+
+}
+
+
+//Funcion para la tienda
+
+function putInCart(id) {
+    cart.push(id)
+    console.log(".......................",cart)
+    galleryApp
+        .getCart(cart)
+}
+
+
+
+
+// function coloredLikes(elem) {
+//     console.log("Esto viene de coloredLikes:", elem)
+//     galleryApp.
+//         getUserAndCompareLikes(elem)
+//         .then(user => {
+
+//             user.data.forEach(element => {
+//                 console.log(element)
+//             });
+
+//         })
+// }
 
 
 //Función para randomizar el array con las obras que se mostrarán en el index

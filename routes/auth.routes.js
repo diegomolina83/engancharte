@@ -89,6 +89,7 @@ router.post('/login', passport.authenticate("local", {
         req.app.locals.verMisObras = 'oculto'
         req.app.locals.iniciar = 'oculto'
         req.app.locals.registro = 'oculto'
+        req.app.locals.shop=''
         res.redirect('/')
     } else if (req.user.role == 'ARTIST') {
         console.log("soy un artista")
@@ -99,6 +100,7 @@ router.post('/login', passport.authenticate("local", {
         req.app.locals.verMisObras = ''
         req.app.locals.iniciar = 'oculto'
         req.app.locals.registro = 'oculto'
+        req.app.locals.shop = ''
         res.redirect('/')
     }
     else {

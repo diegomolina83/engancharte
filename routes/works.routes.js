@@ -113,17 +113,4 @@ router.post('/:id/edit', checkLoggedIn, (req, res, next) => {
         .catch(err => next(err))
 })
 
-
-//Likes de obras
-router.get('/like/:id', checkLoggedIn, (req, res, next) => {
-    newLikes = req.user.likes   //El array se llena con los usuarios a los que sigue el user
-    if (!req.user.likes.includes(req.params.id)) {
-        newLikes.push(req.params.id)
-        User.findByIdAndUpdate(req.user.id, { likes: newLikes })
-            .then(() => res.redirect('back'))
-            .catch(err => next(err))
-    }
-    else console.log("YA ESTÁ INCLUIDO")
-})
-
 module.exports = router

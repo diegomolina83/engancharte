@@ -1,5 +1,3 @@
-
-
 <h1>Perfil de {{user.username}} </h1>
 
 <img class="userEditImage" src="{{user.imageUrl}}" alt="User image profile">
@@ -14,32 +12,28 @@
 
 
 
-<table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Username</th>
-      <th scope="col">Image</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Username</th>
+        <th scope="col">Image</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+
       {{#each users}}
-    <tr>
-      <th scope="row"><a href="/users/profile/{{_id}}">+</a></th>
-      <td>{{username}}</td>
-      <td><img class="userListImage" src="{{imageUrl}}" alt=""></td>
-      <td><a class="{{../msgObj.msg}} btn btn-outline-warning" href="/users/unfollow/{{_id}}">Dejar de seguir </a></td>
-      
-     
-      
-
-
-    </tr>
-    {{/each}}
-     </tbody>
-</table>
+      <tr>
+        <th scope="row"><a href="/users/profile/{{_id}}">+</a></th>
+        <td>{{username}}</td>
+        <td><img class="userListImage" src="{{imageUrl}}" alt=""></td>
+        <td><a class="{{../msgObj.msg}} btn btn-outline-warning" href="/users/unfollow/{{_id}}">Dejar de seguir </a>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 
 </div>
 
@@ -51,31 +45,27 @@
 
 
 
-<table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Username</th>
-      <th scope="col">Image</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Username</th>
+        <th scope="col">Image</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+
       {{#each likes}}
-    <tr>
-      <th scope="row"><a href="/users/profile/{{_id}}">+</a></th>
-      <td>{{title}}</td>
-      <td><img class="userListImage" src="{{imageUrl}}" alt=""></td>
-      <td><a class="{{../msgObj.msg}} btn btn-outline-warning" href="/users/unfollow/{{_id}}">Dejar de seguir </a></td>
-      
-     
-      
-
-
-    </tr>
-    {{/each}}
-     </tbody>
-</table>
+      <tr>
+        <th scope="row"><a href="/works/details/{{_id}}">+</a></th>
+        <td>{{title}}</td>
+        <td><img class="userListImage" src="{{imageUrl}}" alt=""></td>
+        <td><a class="{{../msgObj.msg}} btn btn-outline-warning" href="/works/unfollow/{{_id}}">Dejar de seguir </a>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 
 </div>

@@ -4,21 +4,33 @@ const Works = require(`../models/works.model`)
 
 
 const userSchema = new Schema({
-    username: String,
-    password: String,
-    imageUrl: String,
-    email:String,
-    role:{
-        type:String,
-        enum:['ADMIN','USER','ARTIST'],
-        default:'USER'
-      },
-    followedUsers:{
-        type:[String]
+    username: {
+        type: String,
+        required: true,
+        maxlength: 20,
+        minlength:3
     },
-    likes:{
+    password: {
+        type: String,
+        required: true,
+    },
+    imageUrl: String,
+    email: String,
+    role: {
+        type: String,
+        enum: ['ADMIN', 'USER', 'ARTIST'],
+        default: 'USER'
+    },
+    followedUsers: {
+        type: [String]
+    },
+    likes: {
         type: [String],
         default: []
+    },
+    cart: {
+        type: [String],
+        default:[]
     }
 }, {
     timestamps: true
