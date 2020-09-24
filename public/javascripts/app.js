@@ -18,7 +18,7 @@ window.onload = () => {
                              <p ><a class="nameCard" href="/users/profile/${elm.user._id}"><img class="imageUserLittle" src="${elm.user.imageUrl}" alt="">${elm.user.username}</p></a>
                              <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
                              <a id="price-btn" data-toggle="modal" data-target="#exampleModalLong" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
-                             <a id="like-btn"><img id="${elm._id}" onClick="getIdFavorites('${elm._id}')" class="btn" src="/images/NicePng_balloon-png_23089.png" alt="boton de like"></a>
+                             <a id="like-btn"><img id="${elm._id}" onClick="getIdFavorites('${elm._id}')" class="btn btn-heart" src="/images/blackheart.png" alt="boton de like"></a>
                             </div> 
                              <h3>${elm.title}</h3>
                             <p class="workDescription">${elm.description}</p>
@@ -44,7 +44,7 @@ document.querySelector('#worksField').onkeyup = () => {
                              <p ><a class="nameCard" href="/users/profile/${elm.user._id}"><img class="imageUserLittle" src="${elm.user.imageUrl}" alt="">${elm.user.username}</p></a>
                              <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
                              <a id="price-btn" data-toggle="modal" data-target="#exampleModalLong" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
-                             <a id="like-btn"><img id="${elm._id}" onClick="getIdFavorites('${elm._id}')" class="btn" src="/images/NicePng_balloon-png_23089.png" alt="boton de like"></a>
+                             <a id="like-btn"><img id="${elm._id}" onClick="getIdFavorites('${elm._id}')" class="btn btn-heart" src="/images/blackheart.png" alt="boton de like"></a>
                             </div> 
                              <h3>${elm.title}</h3>
                             <p class="workDescription">${elm.description}</p>
@@ -69,7 +69,7 @@ function getIdFavorites(id) {
 
 //función para cambiar de imagen al pulsar el corazón de Me gusta
 function changeColor(id) {
-    isClick == true ? document.getElementById(id).src = "/images/NicePng_balloon-png_23089.png" : document.getElementById(id).src = "/images/defecto.png"
+    isClick == true ? document.getElementById(id).src = "/images/blackheart.png" : document.getElementById(id).src = "/images/redheart.png"
 }
 
 
@@ -90,8 +90,8 @@ function colorearCorazones() {
             const heartLikes = response.data[0].likes
 
             heartLikes.forEach(elem => {
-                document.getElementById(elem).src = "/images/defecto.png"
-                
+                document.getElementById(elem).src = "/images/blackheart.png"
+                isClick = !isClick
             })
         })
         .catch(err => next(err))
