@@ -2,7 +2,8 @@ class WorksApiHandler {
 
         constructor() {
                 this.app = axios.create({
-                        baseURL: 'https://engancharte.herokuapp.com/api'
+                        baseURL: 'http://localhost:3000/api'
+                        // baseURL: 'https://engancharte.herokuapp.com/api'
                 })
         }
 
@@ -30,6 +31,8 @@ class WorksApiHandler {
                         .catch(err => console.log(err))
         }
 
+        getCurrentUser = () => this.app.get('/currentuser')
+        
 
 }
 

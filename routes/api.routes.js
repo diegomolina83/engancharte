@@ -53,6 +53,15 @@ router.get('/users', checkRole(['ADMIN']), (req, res, next) => {
 
 })
 
+//JSON con un usuario
+router.get('/currentuser', checkLoggedIn, (req, res, next) => {
+    id=req.user._id
+    User.find(id)
+        .then(user => { res.json(user) })
+        .catch(err => next(err))
+
+})
+
 
 //JSON con los likes de los usuarios
 router.get('/users/likes', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, next) => {
