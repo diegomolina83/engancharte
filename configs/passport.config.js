@@ -9,7 +9,11 @@ const User = require('../models/user.model')
 module.exports = app => {
 
     app.use(session({
-        secret: "passport-app-webmad0320",
+        cookie: {
+            secure: true,
+            maxAge:60000
+        },
+        secret: "enganch-arte",
         resave: true,
         saveUninitialized: true
     }))
