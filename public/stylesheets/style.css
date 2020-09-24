@@ -78,7 +78,7 @@ h1, h2, h3 {
   width: 100%; }
 
 .indexImage {
-  width: 100%;
+  width: 90%;
   height: 300px;
   object-fit: cover; }
 
@@ -204,7 +204,7 @@ input {
   text-align: center; }
 
 .card-img, .card-img-bottom, .card-img-top {
-  height: 65px;
+  height: 245px;
   object-fit: contain; }
 
 .profileHead {
@@ -219,30 +219,9 @@ input {
   text-decoration: none; }
 
 .card {
-  margin: 0 4px;
-  padding: 15px;
-  border: none;
-  border-bottom: 1px #e0cece solid; }
+  margin: 0 4px; }
 
 .totalPrice {
   margin: 1px; }
-
-@media (min-width: 481px) and (max-width: 767px) {
-  #logo {
-    display: block;
-    width: 100%;
-    margin: 0 auto;
-    margin-top: -50px; }
-  #worksField {
-    width: 90%; } }
-
-@media (min-width: 320px) and (max-width: 480px) {
-  #logo {
-    display: block;
-    width: 100%;
-    margin: 0 auto;
-    margin-top: -50px; }
-  #worksField {
-    width: 90%; } }
 
 /*# sourceMappingURL=style.css.map */
