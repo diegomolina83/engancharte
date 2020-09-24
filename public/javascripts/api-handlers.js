@@ -2,7 +2,7 @@ class WorksApiHandler {
 
         constructor() {
                 this.app = axios.create({
-                        baseURL: 'http://localhost:3000/api'
+                        baseURL: 'https://engancharte.herokuapp.com/api'
                 })
         }
 
