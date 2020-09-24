@@ -28,8 +28,18 @@ router.get('/works/tags/', (req, res, next) => {
 //JSON con las obras que contengan el tag name
 router.get('/works/tags/:name', (req, res, next) => {
     name = req.params.name
-    Works.find({ $or: [{ title: { "$regex": name } }, { tags: { "$regex": name } }, { description: { "$regex": name } }] })
+    Works.find({ $or: [{ title: { "$regex": name, "$options": "i" } }, { tags: { "$regex": name, "$options": "i" } }, { description: { "$regex": name, "$options": "i"  } }] })
         .populate('user')
+        .then(works => { res.json(works) })
+        .catch(err => next(err))
+})
+
+
+//JSON con los cuadros relizados por un user
+router.get('/works/:userId',  (req, res, next) => {
+    userId = req.params.userId
+    console.log("User Id del back ",userId)
+    Works.find({user:userId} )
         .then(works => { res.json(works) })
         .catch(err => next(err))
 })
@@ -76,10 +86,9 @@ router.get('/users/cart', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, nex
 })
 
 
-//Mandar usuario activo
+//Añadir elementos a carro
 router.post('/users/cart', checkLoggedIn, (req, res, next) => {
     let { _id } = req.user
-    console.log(req.user)
     let { cart } = req.body
     let tempCart
     tempCart = [...req.user.cart, ...cart]
@@ -87,6 +96,17 @@ router.post('/users/cart', checkLoggedIn, (req, res, next) => {
         .then(() => console.log("carro actualizado"))
         .catch(err => next(err))
 })
- 
+
+
+//Eliminar elementos del carro
+router.post('/users/cart/delete', checkLoggedIn, (req, res, next) => {
+    let { _id } = req.user
+    let { cart } = req.body
+    let tempCart
+    tempCart = req.user.cart.filter(lik => lik != cart)
+    User.findByIdAndUpdate({ _id }, { cart: tempCart })
+        .then(() => console.log("carro actualizado"))
+        .catch(err => next(err))
+})
 
 module.exports = router

@@ -1,14 +1,6 @@
 <h1>Esta es la tienda de {{user.username}}</h1>
 
-
-
-
-
-
 <div class="container">
-
-
-
     <table class="table">
         <thead class="thead-dark">
             <tr>
@@ -31,13 +23,18 @@
                 </td>
                 <td>{{author.username}}</td>
                 <td>{{price}}€</td>
-                <td><a class="btn btn-outline-danger" href="/works/{{_id}}/delete/">Eliminar</a>
-                    
-
+                <td><a id="btn-cart-delete" class="btn btn-outline-danger" href="/shop/{{_id}}/delete">Eliminar</a>
             </tr>
             {{/each}}
-
-           <h2>total: {{totalPrice.totalPrice}}</h2> 
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            
+            <td class="totalPrice">
+                <h2>Total: {{totalPrice}}</h2>
+            </td>
         </tbody>
     </table>
 
