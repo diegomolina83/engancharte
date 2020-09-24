@@ -21,7 +21,11 @@ const workSchema = new Schema({
     },
     author: String,
     user: { type: Schema.Types.ObjectId, ref: 'User' },
-    tags:[String]
+    tags: {
+        type: [String],
+        trim: true,
+        lowercase:true
+    }
 }, {
     timestamps: true
 }

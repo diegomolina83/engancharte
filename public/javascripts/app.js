@@ -1,7 +1,60 @@
 let likes = []
 let cart = []
 const galleryApp = new WorksApiHandler()
-let id
+let workId
+
+
+
+window.onload = () => {
+
+    galleryApp
+        .getWorksIndex()
+        .then(response => {
+            html = ''
+            shuffle(response.data)
+            console.log(response.data)
+            response.data.forEach(elm => {
+                coloredLikes(elm)
+                html += `<div class="containerIndex col-sm-4">
+                             <div class="containerLike">
+                             <p ><a onClick="getWorksId('${elm._id}') class="nameCard" href="/users/profile/${elm.user._id}"><img class="imageUserLittle" src="${elm.user.imageUrl}" alt="">${elm.user.username}</p></a>
+                            <a  "href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
+                           
+                            <a id="price-btn" data-toggle="modal" data-target="#exampleModalLong" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
+                             <a id="like-btn"><img onClick="getIdFavorites('${elm._id}')" class="btn" src="/images/NicePng_balloon-png_23089.png" alt="boton de like"></a>
+                            </div> 
+                             <h3>${elm.title}</h3>
+                            <p class="workDescription">${elm.description}</p>
+                          </div>`})
+            document.querySelector('#works').innerHTML = html
+        })
+        .catch(err => console.log(err))
+    
+    // galleryApp
+    //     .getWorksFromUser(workId)
+    //     .then(response => {
+    //         html2 = ''
+    //         shuffle(response.data)
+    //        console.log("ID++++++++++++++++++++++++++++++++",workId)
+    //         response.data.forEach(elm => {
+    //             console.log("ELM--------------------------------------",elm)
+    //             coloredLikes(elm)
+    //             html2 += `<div class="containerIndex col-sm-4">
+    //                          <div class="containerLike">
+    //                          <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
+    //                         <a id="price-btn" data-toggle="modal" data-target="#exampleModalLong" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
+    //                          <a id="like-btn"><img onClick="getIdFavorites('${elm._id}')" class="btn" src="/images/NicePng_balloon-png_23089.png" alt="boton de like"></a>
+    //                         </div> 
+    //                          <h3>${elm.title}</h3>
+    //                         <p class="workDescription">${elm.description}</p>
+    //                       </div>`})
+    //         document.querySelector('#worksuser').innerHTML = html2
+    //     })
+    //     .catch(err => console.log(err))
+
+}
+
+
 document.querySelector('#worksField').onkeyup = () => {
 
     const searchName = document.querySelector('#worksField').value
@@ -27,30 +80,37 @@ document.querySelector('#worksField').onkeyup = () => {
 }
 
 
-window.onload = () => {
+//Funcion
 
+function getWorksId(id) {
+   
+   
     galleryApp
-        .getWorksIndex()
+        .getWorksFromUser(id)
         .then(response => {
-            html = ''
+            html2 = ''
             shuffle(response.data)
-            console.log(response.data)
+            
             response.data.forEach(elm => {
                 // coloredLikes(elm)
-                html += `<div class="containerIndex col-sm-4">
+                console.log("-+-+-+-+-+-+-+-+-+-+ELM",elm)
+                html2 += `<div class="containerIndex col-sm-4">
                              <div class="containerLike">
-                             <p ><a class="nameCard" href="/users/profile/${elm.user._id}"><img class="imageUserLittle" src="${elm.user.imageUrl}" alt="">${elm.user.username}</p></a>
-                            <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
-                             <a id="price-btn" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
+                             <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
+                            <a id="price-btn" data-toggle="modal" data-target="#exampleModalLong" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
                              <a id="like-btn"><img onClick="getIdFavorites('${elm._id}')" class="btn" src="/images/NicePng_balloon-png_23089.png" alt="boton de like"></a>
                             </div> 
                              <h3>${elm.title}</h3>
                             <p class="workDescription">${elm.description}</p>
                           </div>`})
-            document.querySelector('#works').innerHTML = html
+            document.querySelector('#worksuser').innerHTML = html2
         })
         .catch(err => console.log(err))
 }
+
+
+
+
 
 
 
@@ -70,27 +130,34 @@ function getIdFavorites(id) {
 //Funcion para la tienda
 
 function putInCart(id) {
+    cambiarColor(id)
     cart.push(id)
-    console.log(".......................",cart)
+    if(cart.length>1)cart.shift()
     galleryApp
         .getCart(cart)
 }
 
 
+//Funcion para cambiar el color de los corazones
+function cambiarColor(id) {
+    console.log("Obra añadida al carro")
+    
+}
 
 
-// function coloredLikes(elem) {
-//     console.log("Esto viene de coloredLikes:", elem)
-//     galleryApp.
-//         getUserAndCompareLikes(elem)
-//         .then(user => {
+function coloredLikes(elem) {
+    console.log("Esto viene de coloredLikes:", elem)
+    console.log(document.querySelector('#btn-cart-delete'))
+    // galleryApp.
+    //     getUserAndCompareLikes(elem)
+    //     .then(user => {
 
-//             user.data.forEach(element => {
-//                 console.log(element)
-//             });
+    //         user.data.forEach(element => {
+    //             console.log(element)
+    //         });
 
-//         })
-// }
+    //     })
+}
 
 
 //Función para randomizar el array con las obras que se mostrarán en el index
