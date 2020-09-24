@@ -8,21 +8,30 @@ const userSchema = new Schema({
         type: String,
         required: true,
         maxlength: 20,
-        minlength:3
+        minlength: 3,
+        trim: true,
+        lowercase: true
     },
     password: {
         type: String,
         required: true,
+        minlength:4,
     },
-    imageUrl: String,
-    email: String,
+    imageUrl: {
+        type: String,
+        default: '/images/defecto.png',
+    },
+    email: {
+        type: String
+    },
     role: {
         type: String,
         enum: ['ADMIN', 'USER', 'ARTIST'],
         default: 'USER'
     },
     followedUsers: {
-        type: [String]
+        type: [String],
+        default:[]
     },
     likes: {
         type: [String],
@@ -30,7 +39,7 @@ const userSchema = new Schema({
     },
     cart: {
         type: [String],
-        default:[]
+        default: []
     }
 }, {
     timestamps: true
