@@ -8,24 +8,23 @@ function initMap() {
 
 });
 
-
 const location = document.querySelector('#location').innerText
-console.log(location)
 
 
-
-
-
-axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=Madrid&region=es&key=AIzaSyDZzm0DI7JwThVwysdtDJkdsFCktalySFc`)
+axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${location}&region=es&key=AIzaSyDZzm0DI7JwThVwysdtDJkdsFCktalySFc`)
     .then(res => {
-    objLocationGeo = {  
-        lat: res.data.results[0].geometry.location.lat,
-        lng: res.data.results[0].geometry.location.lng
-    }
+        objLocationGeo = {  
+            lat: res.data.results[0].geometry.location.lat,
+            lng: res.data.results[0].geometry.location.lng
+        }
 
     const marker = new window.google.maps.Marker({
-    position: objLocationGeo,
-    map: map,
-    })      
-}) 
+        position: objLocationGeo,
+        map: map,
+        })      
+    }) 
 }
+
+
+
+
