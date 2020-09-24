@@ -124,6 +124,13 @@ input{
   filter: hue-rotate(90deg);
 }
 
+#map {
+    margin-top: 200px;
+    width: 100%;
+    height: 300px;
+    background: grey;
+}
+
 
 .containerLike .imageUserLittle{
   width:50px;
