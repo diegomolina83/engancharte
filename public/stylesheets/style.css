@@ -220,6 +220,17 @@ input {
 .totalPrice {
   margin: 1px; }
 
+.btn-heart {
+  width: 5%;
+  height: 5%; }
+
+.btn-back {
+  width: 4%;
+  position: fixed; }
+
+.cabecera {
+  background-color: black; }
+
 @media (min-width: 481px) and (max-width: 767px) {
   #logo {
     display: block;
@@ -236,10 +247,10 @@ input {
     margin: 0 auto;
     margin-top: -50px; }
   #worksField {
-    width: 90%; } }
-
-.btn-heart {
-  width: 5%;
-  height: 5%; }
+    width: 90%; }
+  .btn-back {
+    width: 6%;
+    position: fixed;
+    top: 14%; } }
 
 /*# sourceMappingURL=style.css.map */

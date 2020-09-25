@@ -6,6 +6,7 @@ let isClick = true
 
 
 window.onload = () => {
+    
     galleryApp
         .getWorksIndex()
         .then(response => {
@@ -13,6 +14,7 @@ window.onload = () => {
             shuffle(response.data)
             response.data.forEach(elm => {
                 colorearCorazones()
+                isclick=false
                 html += `<div class="containerIndex col-sm-4">
                              <div class="containerLike">
                              <p ><a class="nameCard" href="/users/profile/${elm.user._id}"><img class="imageUserLittle" src="${elm.user.imageUrl}" alt="">${elm.user.username}</p></a>
@@ -84,7 +86,7 @@ function putInCart(id) {
 
 //Función para colorear los corazones 
 function colorearCorazones() {
-    
+
     galleryApp.getCurrentUser()
         .then(response => {
             const heartLikes = response.data[0].likes
