@@ -1,18 +1,13 @@
 <h1>Editar obra</h1>
 
-
-
-
-<img class="glideImage"src="{{imageUrl}}" alt="">
-
-
+<img class="glideImage" src="{{imageUrl}}" alt="">
 
 <div class="row justify-content-center">
     <div class="col-md-6">
 
         <h1>Modifica tu obra</h1>
 
-        <form action="/works/{{_id}}/edit" method="POST" >
+        <form action="/works/{{_id}}/edit" method="POST">
             <div class="form-group">
                 <label for="field1">Titulo de la obra</label>
                 <input name="title" type="text" class="form-control" id="field1" value="{{title}}">
@@ -25,15 +20,15 @@
                 <label for="field3">Descripcion de la obra</label>
                 <input name="description" type="text" class="form-control" id="field3" value="{{description}}">
             </div>
-              <div class="form-group">
+            <div class="form-group">
                 <label for="field6">Tags</label>
                 <input name="tags" type="text" class="form-control" id="field6" value="{{tags}}">
             </div>
-             <div class="form-group">
+            <div class="form-group">
                 <label for="field4">Autor/a</label>
                 <input name="author" type="text" class="form-control" id="field4" value="{{author}}">
             </div>
-             <div class="form-group">
+            <div class="form-group">
                 <label for="field6">Precio de la obra</label>
                 <input name="price" type="number" class="form-control" id="field6" value="{{price}}">
             </div>

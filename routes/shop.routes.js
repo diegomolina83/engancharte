@@ -11,7 +11,6 @@ const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && r
 
 //Pintar la tienda
 router.get('/', checkLoggedIn, (req, res) => {
-
     let id = req.user._id
     let cart = req.user.cart
     let products = []

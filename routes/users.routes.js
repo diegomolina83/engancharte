@@ -137,6 +137,7 @@ router.get('/follow/:id', checkLoggedIn, (req, res, next) => {
     else console.log("YA ESTÁ INCLUIDO")
 })
 
+
 //Dejar de seguir
 router.get('/unfollow/:id', checkLoggedIn, (req, res, next) => {
     let unfollow = req.user.followedUsers
