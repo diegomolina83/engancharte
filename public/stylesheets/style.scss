@@ -244,6 +244,21 @@ background-color: blue;
 }
 
 
+.btn-heart{
+  width: 5%;
+  height: 5%;
+}
+
+.btn-back{
+  width: 4%;
+  position:fixed;
+} 
+.cabecera{
+  background-color: black;
+}
+
+//Media Queries
+
 @media (min-width: 481px) and (max-width: 767px) {
   
   #logo{
@@ -271,18 +286,10 @@ background-color: blue;
 
 #worksField {
   width: 90%;
-  
-}
-// .card{
-// display:flex;
-// flex-direction: row;
-// border:none;
-
-// }
-
 }
 
-.btn-heart{
-  width: 5%;
-  height: 5%;
-}
+.btn-back{
+  width: 6%;
+  position:fixed;
+  top:14%;
+} }

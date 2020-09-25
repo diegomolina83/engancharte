@@ -41,9 +41,9 @@ router.get('/:id/delete', checkLoggedIn, (req, res, next) => {
         let index = deleteWork.indexOf(req.params.id)
         deleteWork.splice(index, 1)
         User.findByIdAndUpdate(req.user.id, { cart: deleteWork })
-        .then(() => res.redirect('back'))
-        .catch(err => next(err))
-}
+            .then(() => res.redirect('back'))
+            .catch(err => next(err))
+    }
 })
 
 
