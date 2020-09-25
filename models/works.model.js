@@ -4,13 +4,17 @@ const Schema = mongoose.Schema
 const workSchema = new Schema({
     title: {
         type: String,
-        required: true
+        required: true,
+        default: 'Sin titulo'
+
     },
     imageUrl: {
         type: String,
     },
     description: {
-        type: String
+        type: String,
+        minlength: 10,
+        maxlength: 500
     },
     tematica: {
         type: String
@@ -25,6 +29,9 @@ const workSchema = new Schema({
         type: [String],
         trim: true,
         lowercase:true
+    },
+    location: {
+        type: String
     }
 }, {
     timestamps: true

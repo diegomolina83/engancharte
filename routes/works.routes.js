@@ -6,6 +6,7 @@ const User = require('../models/user.model')
 const cdnUploader = require('../configs/cloudinary.config')
 const { route } = require('./index.routes')
 
+
 const checkLoggedIn = (req, res, next) => req.isAuthenticated() ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, incia sesión para continuar' })
 const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && rolesToCheck.includes(req.user.role) ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, no tienes permisos para ver eso.' })
 
@@ -30,7 +31,7 @@ router.get('/create', checkRole(['ADMIN', 'ARTIST']), (req, res, next) => {
 
 // Crea una obra en la bdd (POST)
 router.post('/create', cdnUploader.single('imageInput'), (req, res, next) => {
-    const { title, description, tags, author, price } = req.body
+    const { title, description, tags, author, price, location } = req.body
     const tematica = tags.split(',')
     if (!title || !description || !price) {
         res.render("works/createWorks", { errorMsg: "Rellena los campos titulo, descripcion y precio" })
@@ -53,7 +54,7 @@ router.post('/create', cdnUploader.single('imageInput'), (req, res, next) => {
     } else {
         imageUrl = '../images/defecto.png'
     }
-    Works.create({ title, description, tags: tematica, imageUrl, author, price, user: req.user })
+    Works.create({ title, description, tags: tematica, imageUrl, author, price, user: req.user, location })
         .then(res.redirect('/'))
         .catch(err => next(err))
 })

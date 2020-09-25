@@ -4,6 +4,14 @@ body {
   font-weight: 200;
 }
 
+
+#map {
+    margin-top: 200px;
+    width: 100%;
+    height: 300px;
+    background: grey;
+}
+
 h1, h2, h3 {
   font-weight: 200;
 }
@@ -35,6 +43,10 @@ h1, h2, h3 {
 
 }
 
+#image-work {
+    width: 100%;
+}
+
 .indexImage{
   width: 90%;
   height: 300px;
@@ -45,6 +57,11 @@ h1, h2, h3 {
    transform: scale(1.1);
    transition: transform .2s;
 }
+
+#location {
+    visibility: visible;
+}
+
 
 .glideImage{
   height: 300px;
@@ -122,6 +139,13 @@ input{
 
 .containerLike .btn:hover {
   filter: hue-rotate(90deg);
+}
+
+#map {
+    margin-top: 200px;
+    width: 100%;
+    height: 300px;
+    background: grey;
 }
 
 
