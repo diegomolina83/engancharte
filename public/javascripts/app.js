@@ -2,26 +2,25 @@ let likes = []
 let cart = []
 const galleryApp = new WorksApiHandler()
 let workId
-
+let isClick = true
 
 
 window.onload = () => {
-
+    
     galleryApp
         .getWorksIndex()
         .then(response => {
             html = ''
             shuffle(response.data)
-            console.log(response.data)
             response.data.forEach(elm => {
-                coloredLikes(elm)
+                colorearCorazones()
+                isclick=false
                 html += `<div class="containerIndex col-sm-4">
                              <div class="containerLike">
-                             <p ><a onClick="getWorksId('${elm._id}') class="nameCard" href="/users/profile/${elm.user._id}"><img class="imageUserLittle" src="${elm.user.imageUrl}" alt="">${elm.user.username}</p></a>
-                            <a  "href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
-                           
-                            <a id="price-btn" data-toggle="modal" data-target="#exampleModalLong" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
-                             <a id="like-btn"><img onClick="getIdFavorites('${elm._id}')" class="btn" src="/images/NicePng_balloon-png_23089.png" alt="boton de like"></a>
+                             <p ><a class="nameCard" href="/users/profile/${elm.user._id}"><img class="imageUserLittle" src="${elm.user.imageUrl}" alt="">${elm.user.username}</p></a>
+                             <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
+                             <a id="price-btn" data-toggle="modal" data-target="#exampleModalLong" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
+                             <a id="like-btn"><img id="${elm._id}" onClick="getIdFavorites('${elm._id}')" class="btn btn-heart" src="/images/blackheart.png" alt="boton de like"></a>
                             </div> 
                              <h3>${elm.title}</h3>
                             <p class="workDescription">${elm.description}</p>
@@ -29,29 +28,6 @@ window.onload = () => {
             document.querySelector('#works').innerHTML = html
         })
         .catch(err => console.log(err))
-    
-    // galleryApp
-    //     .getWorksFromUser(workId)
-    //     .then(response => {
-    //         html2 = ''
-    //         shuffle(response.data)
-    //        console.log("ID++++++++++++++++++++++++++++++++",workId)
-    //         response.data.forEach(elm => {
-    //             console.log("ELM--------------------------------------",elm)
-    //             coloredLikes(elm)
-    //             html2 += `<div class="containerIndex col-sm-4">
-    //                          <div class="containerLike">
-    //                          <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
-    //                         <a id="price-btn" data-toggle="modal" data-target="#exampleModalLong" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
-    //                          <a id="like-btn"><img onClick="getIdFavorites('${elm._id}')" class="btn" src="/images/NicePng_balloon-png_23089.png" alt="boton de like"></a>
-    //                         </div> 
-    //                          <h3>${elm.title}</h3>
-    //                         <p class="workDescription">${elm.description}</p>
-    //                       </div>`})
-    //         document.querySelector('#worksuser').innerHTML = html2
-    //     })
-    //     .catch(err => console.log(err))
-
 }
 
 
@@ -63,62 +39,29 @@ document.querySelector('#worksField').onkeyup = () => {
         .then(response => {
             html = ''
             shuffle(response.data)
-            response.data.forEach(elm =>
+            response.data.forEach(elm => {
+                colorearCorazones()
                 html += `<div class="containerIndex col-sm-4">
                              <div class="containerLike">
                              <p ><a class="nameCard" href="/users/profile/${elm.user._id}"><img class="imageUserLittle" src="${elm.user.imageUrl}" alt="">${elm.user.username}</p></a>
-                            <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
-                             <a id="price-btn" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
-                             <a id="like-btn"><img onClick="getIdFavorites('${elm._id}')" class="btn" src="/images/NicePng_balloon-png_23089.png" alt="boton de like"></a>
+                             <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
+                             <a id="price-btn" data-toggle="modal" data-target="#exampleModalLong" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
+                             <a id="like-btn"><img id="${elm._id}" onClick="getIdFavorites('${elm._id}')" class="btn btn-heart" src="/images/blackheart.png" alt="boton de like"></a>
                             </div> 
                              <h3>${elm.title}</h3>
                             <p class="workDescription">${elm.description}</p>
-                          </div>`)
+                          </div>`})
             document.querySelector('#works').innerHTML = html
         })
         .catch(err => console.log(err))
 }
 
 
-//Funcion
-
-function getWorksId(id) {
-   
-   
-    galleryApp
-        .getWorksFromUser(id)
-        .then(response => {
-            html2 = ''
-            shuffle(response.data)
-            
-            response.data.forEach(elm => {
-                // coloredLikes(elm)
-                console.log("-+-+-+-+-+-+-+-+-+-+ELM",elm)
-                html2 += `<div class="containerIndex col-sm-4">
-                             <div class="containerLike">
-                             <a href="/works/details/${elm._id}"><img class="indexImage" src="${elm.imageUrl}" alt="imagen"></a>
-                            <a id="price-btn" data-toggle="modal" data-target="#exampleModalLong" onClick="putInCart('${elm._id}')" class="btn"> ${elm.price}€</a>
-                             <a id="like-btn"><img onClick="getIdFavorites('${elm._id}')" class="btn" src="/images/NicePng_balloon-png_23089.png" alt="boton de like"></a>
-                            </div> 
-                             <h3>${elm.title}</h3>
-                            <p class="workDescription">${elm.description}</p>
-                          </div>`})
-            document.querySelector('#worksuser').innerHTML = html2
-        })
-        .catch(err => console.log(err))
-}
-
-
-
-
-
-
-
-
 //Funcion para los likes
-
 function getIdFavorites(id) {
+    changeColor(id)
     likes.push(id)
+    isClick = !isClick
     document.querySelector('#like-btn')
     if (likes.length > 1) likes.shift()
     galleryApp
@@ -126,37 +69,34 @@ function getIdFavorites(id) {
 
 }
 
+//función para cambiar de imagen al pulsar el corazón de Me gusta
+function changeColor(id) {
+    isClick == true ? document.getElementById(id).src = "/images/blackheart.png" : document.getElementById(id).src = "/images/redheart.png"
+}
+
 
 //Funcion para la tienda
-
 function putInCart(id) {
-    cambiarColor(id)
     cart.push(id)
-    if(cart.length>1)cart.shift()
+    if (cart.length > 1) cart.shift()
     galleryApp
         .getCart(cart)
 }
 
 
-//Funcion para cambiar el color de los corazones
-function cambiarColor(id) {
-    console.log("Obra añadida al carro")
-    
-}
+//Función para colorear los corazones 
+function colorearCorazones() {
 
+    galleryApp.getCurrentUser()
+        .then(response => {
+            const heartLikes = response.data[0].likes
 
-function coloredLikes(elem) {
-    console.log("Esto viene de coloredLikes:", elem)
-    console.log(document.querySelector('#btn-cart-delete'))
-    // galleryApp.
-    //     getUserAndCompareLikes(elem)
-    //     .then(user => {
-
-    //         user.data.forEach(element => {
-    //             console.log(element)
-    //         });
-
-    //     })
+            heartLikes.forEach(elem => {
+                document.getElementById(elem).src = "/images/redheart.png"
+                isClick = !isClick
+            })
+        })
+        .catch(err => next(err))
 }
 
 

@@ -28,7 +28,7 @@ router.get('/works/tags/', (req, res, next) => {
 //JSON con las obras que contengan el tag name
 router.get('/works/tags/:name', (req, res, next) => {
     name = req.params.name
-    Works.find({ $or: [{ title: { "$regex": name, "$options": "i" } }, { tags: { "$regex": name, "$options": "i" } }, { description: { "$regex": name, "$options": "i"  } }] })
+    Works.find({ $or: [{ title: { "$regex": name, "$options": "i" } }, { tags: { "$regex": name, "$options": "i" } }, { description: { "$regex": name, "$options": "i" } }] })
         .populate('user')
         .then(works => { res.json(works) })
         .catch(err => next(err))
@@ -36,10 +36,10 @@ router.get('/works/tags/:name', (req, res, next) => {
 
 
 //JSON con los cuadros relizados por un user
-router.get('/works/:userId',  (req, res, next) => {
+router.get('/works/:userId', (req, res, next) => {
     userId = req.params.userId
-    console.log("User Id del back ",userId)
-    Works.find({user:userId} )
+    console.log("User Id del back ", userId)
+    Works.find({ user: userId })
         .then(works => { res.json(works) })
         .catch(err => next(err))
 })
@@ -48,6 +48,15 @@ router.get('/works/:userId',  (req, res, next) => {
 //JSON con los usuarios
 router.get('/users', checkRole(['ADMIN']), (req, res, next) => {
     User.find()
+        .then(user => { res.json(user) })
+        .catch(err => next(err))
+})
+
+
+//JSON con un usuario
+router.get('/currentuser', checkLoggedIn, (req, res, next) => {
+    id = req.user._id
+    User.find(id)
         .then(user => { res.json(user) })
         .catch(err => next(err))
 

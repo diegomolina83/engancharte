@@ -8,8 +8,9 @@ const { populate } = require('../models/works.model')
 const checkLoggedIn = (req, res, next) => req.isAuthenticated() ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, incia sesión para continuar' })
 const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && rolesToCheck.includes(req.user.role) ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, no tienes permisos para ver eso.' })
 
-router.get('/', checkLoggedIn, (req, res) => {
 
+//Pintar la tienda
+router.get('/', checkLoggedIn, (req, res) => {
     let id = req.user._id
     let cart = req.user.cart
     let products = []
@@ -33,35 +34,16 @@ router.get('/', checkLoggedIn, (req, res) => {
 
 
 //Borrar obras del carro
-
-
 router.get('/:id/delete', checkLoggedIn, (req, res, next) => {
     let deleteWork = req.user.cart
     if (deleteWork.includes(req.params.id)) {
         let index = deleteWork.indexOf(req.params.id)
         deleteWork.splice(index, 1)
         User.findByIdAndUpdate(req.user.id, { cart: deleteWork })
-        .then(() => res.redirect('back'))
-        .catch(err => next(err))
-}
+            .then(() => res.redirect('back'))
+            .catch(err => next(err))
+    }
 })
-
-
-
-// router.get('/unfollow/:id', checkLoggedIn, (req, res, next) => {
-//     let unfollow = req.user.followedUsers
-//     if (unfollow.includes(req.params.id)) {
-//         let index = unfollow.indexOf(req.params.id)
-//         unfollow.splice(index, 1)
-//         User.findByIdAndUpdate(req.user.id, { followedUsers: unfollow })
-//             .then(() => res.redirect('back'))
-//             .catch(err => next(err))
-//     }
-//     else { console.log("No lo seguías") }
-// })
-
-
-
 
 
 module.exports = router

@@ -16,6 +16,7 @@ const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && r
 // User signup(GET)
 router.get("/signup", (req, res) => res.render("auth/signup"))
 
+
 //User signup (POST)
 router.post("/signup", cdnUploader.single('imageInput'), (req, res, next) => {
     const { username, password, email, role } = req.body
@@ -89,7 +90,7 @@ router.post('/login', passport.authenticate("local", {
         req.app.locals.verMisObras = 'oculto'
         req.app.locals.iniciar = 'oculto'
         req.app.locals.registro = 'oculto'
-        req.app.locals.shop=''
+        req.app.locals.shop = ''
         res.redirect('/')
     } else if (req.user.role == 'ARTIST') {
         console.log("soy un artista")

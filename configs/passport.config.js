@@ -10,9 +10,7 @@ module.exports = app => {
 
     app.use(session({
         secret: "passport-app-webmad0320",
-        cookie: { maxAge: 60000 },
         resave: true,
-        rolling: true,
         saveUninitialized: true
     }))
 
