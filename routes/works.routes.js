@@ -30,7 +30,7 @@ router.get('/create', checkRole(['ADMIN', 'ARTIST']), (req, res, next) => {
 
 // Crea una obra en la bdd (POST)
 router.post('/create', cdnUploader.single('imageInput'), (req, res, next) => {
-    const { title, description, tags, price } = req.body
+    const { title, description, tags, price, location } = req.body
     const tematica = tags.split(',')
     if (!title || !description || !price) {
         res.render("works/createWorks", { errorMsg: "Rellena los campos titulo, descripcion y precio" })
@@ -53,7 +53,7 @@ router.post('/create', cdnUploader.single('imageInput'), (req, res, next) => {
     } else {
         imageUrl = '../images/defecto.png'
     }
-    Works.create({ title, description, tags: tematica, imageUrl, price, user: req.user })
+    Works.create({ title, description, tags: tematica, imageUrl, price, user: req.user, location })
         .then(res.redirect('/'))
         .catch(err => next(err))
 })
@@ -62,12 +62,12 @@ router.post('/create', cdnUploader.single('imageInput'), (req, res, next) => {
 // Muestra los detalles de cada obra
 router.get('/details/:id', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, next) => {
     const id = req.params.id
+
     Works.findByIdAndUpdate(id)
         .populate('user')
         .then(work => res.render('works/detailsWorks', { work }))
         .catch(err => next(err))
 })
-
 
 // Muestra las obras del artista logueado
 router.get('/my-works', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, next) => {

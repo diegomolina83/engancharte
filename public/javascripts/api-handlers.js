@@ -23,6 +23,7 @@ class WorksApiHandler {
     }
     getCurrentUser = () => this.app.get('/currentuser')
 
+    getLocation = (workId) => this.app.get(`/location/${workId}`)
 
 }
 

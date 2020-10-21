@@ -21,6 +21,10 @@ const workSchema = new Schema({
         type: [String],
         trim: true,
         lowercase: true
+    },
+    location: {
+        type: String,
+        required: false
     }
 }, {
     timestamps: true

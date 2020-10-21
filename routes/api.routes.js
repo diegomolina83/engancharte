@@ -6,6 +6,13 @@ const User = require('../models/user.model')
 const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && rolesToCheck.includes(req.user.role) ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, no tienes permisos para ver eso.' })
 const checkLoggedIn = (req, res, next) => req.isAuthenticated() ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, incia sesión para continuar' })
 
+// Obtiene la localizacion
+router.get('/location/:id', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, next) => {
+    const id = req.params.id
+
+    Works.findById(id)
+        .then(work => res.json(work))
+})
 
 //Creamos un json con todas las obras de la bbdd
 router.get('/works/', (req, res, next) => {
@@ -117,5 +124,14 @@ router.post('/users/cart/delete', checkLoggedIn, (req, res, next) => {
         .then(() => console.log("carro actualizado"))
         .catch(err => next(err))
 })
+
+// // Obtener localizacion de obra
+// router.get('/works/location/:id', (req, res, next) => {
+
+//     Works.findById(req.params.id, { location })
+//         .then(response => res.json(response))
+//         .catch(err => console.log(err))
+
+// })
 
 module.exports = router
