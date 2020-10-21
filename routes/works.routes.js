@@ -60,7 +60,7 @@ router.post('/create', cdnUploader.single('imageInput'), (req, res, next) => {
 
 
 // Muestra los detalles de cada obra
-router.get('/details/:id', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, next) => {
+router.get('/details/:id', (req, res, next) => {
     const id = req.params.id
 
     Works.findByIdAndUpdate(id)

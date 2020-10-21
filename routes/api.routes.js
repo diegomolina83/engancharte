@@ -7,7 +7,7 @@ const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && r
 const checkLoggedIn = (req, res, next) => req.isAuthenticated() ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, incia sesión para continuar' })
 
 // Obtiene la localizacion
-router.get('/location/:id', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, next) => {
+router.get('/location/:id', (req, res, next) => {
     const id = req.params.id
 
     Works.findById(id)
