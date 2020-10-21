@@ -6,7 +6,6 @@ const User = require('../models/user.model')
 const cdnUploader = require('../configs/cloudinary.config')
 const { route } = require('./index.routes')
 
-
 const checkLoggedIn = (req, res, next) => req.isAuthenticated() ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, incia sesión para continuar' })
 const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && rolesToCheck.includes(req.user.role) ? next() : res.render('auth/login', { errorMsg: 'Desautorizado, no tienes permisos para ver eso.' })
 
@@ -31,7 +30,7 @@ router.get('/create', checkRole(['ADMIN', 'ARTIST']), (req, res, next) => {
 
 // Crea una obra en la bdd (POST)
 router.post('/create', cdnUploader.single('imageInput'), (req, res, next) => {
-    const { title, description, tags, author, price, location } = req.body
+    const { title, description, tags, price, location } = req.body
     const tematica = tags.split(',')
     if (!title || !description || !price) {
         res.render("works/createWorks", { errorMsg: "Rellena los campos titulo, descripcion y precio" })
@@ -54,7 +53,7 @@ router.post('/create', cdnUploader.single('imageInput'), (req, res, next) => {
     } else {
         imageUrl = '../images/defecto.png'
     }
-    Works.create({ title, description, tags: tematica, imageUrl, author, price, user: req.user, location })
+    Works.create({ title, description, tags: tematica, imageUrl, price, user: req.user, location })
         .then(res.redirect('/'))
         .catch(err => next(err))
 })
@@ -63,12 +62,12 @@ router.post('/create', cdnUploader.single('imageInput'), (req, res, next) => {
 // Muestra los detalles de cada obra
 router.get('/details/:id', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, next) => {
     const id = req.params.id
+
     Works.findByIdAndUpdate(id)
         .populate('user')
         .then(work => res.render('works/detailsWorks', { work }))
         .catch(err => next(err))
 })
-
 
 // Muestra las obras del artista logueado
 router.get('/my-works', checkRole(['ADMIN', 'USER', 'ARTIST']), (req, res, next) => {
@@ -108,10 +107,38 @@ router.get('/:id/edit', (req, res, next) => {
 // editar obra (POST)
 router.post('/:id/edit', checkLoggedIn, (req, res, next) => {
     const id = req.params.id
-    const { title, author, description, tags, price } = req.body
-    Works.findByIdAndUpdate(id, { title, author, description, tags, price })
+    const { title, description, tags, price } = req.body
+    Works.findByIdAndUpdate(id, { title, description, tags, price })
         .then(() => res.redirect('/'))
         .catch(err => next(err))
 })
 
+
+//Eliminar obras de me gusta
+router.get('/unfollow/:id', checkLoggedIn, (req, res, next) => {
+    let tempLikes = req.user.likes
+    if (tempLikes.includes(req.params.id)) {
+        let index = tempLikes.indexOf(req.params.id)
+        tempLikes.splice(index, 1)
+        User.findByIdAndUpdate(req.user.id, { likes: tempLikes })
+            .then(() => res.redirect('back'))
+            .catch(err => next(err))
+    } else { console.log("no lo seguías") }
+})
+
+
+//Seguir Obras
+router.get('/follow/:id', checkLoggedIn, (req, res, next) => {
+    newFollow = req.user.likes   //El array se llena con los usuarios a los que sigue el user
+    if (!req.user.likes.includes(req.params.id)) {
+        newFollow.push(req.params.id)
+        User.findByIdAndUpdate(req.user.id, { likes: newFollow })
+            .then(() => res.redirect('back'))
+            .catch(err => next(err))
+    }
+    else console.log("YA ESTÁ INCLUIDO")
+})
+
 module.exports = router
+
+

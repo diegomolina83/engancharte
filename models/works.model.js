@@ -4,34 +4,27 @@ const Schema = mongoose.Schema
 const workSchema = new Schema({
     title: {
         type: String,
-        required: true,
-        default: 'Sin titulo'
-
+        required: true
     },
     imageUrl: {
         type: String,
     },
     description: {
-        type: String,
-        minlength: 10,
-        maxlength: 500
-    },
-    tematica: {
         type: String
     },
     price: {
         type: Number,
         required: true
     },
-    author: String,
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     tags: {
         type: [String],
         trim: true,
-        lowercase:true
+        lowercase: true
     },
     location: {
-        type: String
+        type: String,
+        required: false
     }
 }, {
     timestamps: true

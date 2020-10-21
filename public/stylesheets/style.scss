@@ -1,15 +1,14 @@
 @import "node_modules/@glidejs/glide/src/assets/sass/glide.core";
 
-body {
-  font-weight: 200;
+#map {
+    overflow: visible;
+    width: 300px;
+    height: 350px;
 }
 
 
-#map {
-    margin-top: 200px;
-    width: 100%;
-    height: 300px;
-    background: grey;
+body {
+  font-weight: 200;
 }
 
 h1, h2, h3 {
@@ -43,12 +42,15 @@ h1, h2, h3 {
 
 }
 
-#image-work {
-    width: 100%;
+.indexImageDetail{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  margin: 14% 3px 14% 3px;
 }
 
 .indexImage{
-  width: 90%;
+  width: 100%;
   height: 300px;
   object-fit: cover;
 }
@@ -57,11 +59,6 @@ h1, h2, h3 {
    transform: scale(1.1);
    transition: transform .2s;
 }
-
-#location {
-    visibility: visible;
-}
-
 
 .glideImage{
   height: 300px;
@@ -141,13 +138,6 @@ input{
   filter: hue-rotate(90deg);
 }
 
-#map {
-    margin-top: 200px;
-    width: 100%;
-    height: 300px;
-    background: grey;
-}
-
 
 .containerLike .imageUserLittle{
   width:50px;
@@ -217,7 +207,7 @@ background-color: blue;
 }
 
 .card-img, .card-img-bottom, .card-img-top {
-    height: 245px;
+    height: 65px;
     object-fit: contain;
 }
 
@@ -237,8 +227,62 @@ background-color: blue;
 
 .card{
   margin: 0 4px;
+  padding: 15px;
+  border:none;
+  border-bottom: 1px rgb(224, 206, 206) solid;
 }
 
 .totalPrice{
   margin:1px;
 }
+
+
+.btn-heart{
+  width: 5%;
+  height: 5%;
+}
+
+.btn-back{
+  width: 4%;
+  position:fixed;
+} 
+.cabecera{
+  background-color: black;
+}
+
+//Media Queries
+
+@media (min-width: 481px) and (max-width: 767px) {
+  
+  #logo{
+  display:block;
+  width: 100%;
+  margin:0 auto;
+  margin-top: -50px;
+}
+  
+#worksField {
+    
+    width: 90%;
+}
+}
+
+
+@media (min-width: 320px) and (max-width: 480px) {
+  
+ #logo{
+  display:block;
+  width: 100%;
+  margin:0 auto;
+  margin-top: -50px;
+}
+
+#worksField {
+  width: 90%;
+}
+
+.btn-back{
+  width: 6%;
+  position:fixed;
+  top:14%;
+} }

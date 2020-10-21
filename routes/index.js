@@ -1,9 +1,6 @@
-const cors = require('cors')
-
 module.exports = app => {
 
   // Base URLS
-  app.use(cors())
   app.use('/', require('./index.routes'))
   app.use('/', require('./auth.routes'))
   app.use('/users', require('./users.routes'))

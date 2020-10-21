@@ -1,8 +1,5 @@
 <h1>Mis obras</h1><br><br>
 
-
-
-
 <div class="container">
     <div class="row">
         {{#each myWorks}}
@@ -10,9 +7,8 @@
             <a href="/works/details/{{_id}}"><img class="indexImage" src="{{imageUrl}}" alt="imagen"></a>
             <h3>{{title}}</h3>
             <p>{{descriprion}}</p>
- 
-            <a class="btn btn-outline-danger" onclick="return confirm('Estas seguro de borrar la obra?')" href="/works/{{id}}/delete">Borrar Obra</a>
-            <a  id="edit" class="btn btn-outline-primary" href="/works/{{id}}/edit">Editar Obra</a>
+            <a class="btn btn-outline-danger" href="/works/{{id}}/delete">Borrar Obra</a>
+            <a class="btn btn-outline-primary" href="/works/{{id}}/edit">Editar Obra</a>
             <p>{{price}}€</p>
         </div>
         {{/each}}
